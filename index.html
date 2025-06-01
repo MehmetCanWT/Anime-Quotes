@@ -3,16 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quote Generator</title>
+  <title>Anime Quote Generator — Inspirational Quotes from Your Favorite Anime</title>
+  <meta name="description" content="Generate random inspirational anime quotes from popular characters. Get fresh quotes every click!" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Anime Quote Generator" />
+  <meta property="og:description" content="Generate random inspirational anime quotes from popular characters. Get fresh quotes every click!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://anime-quotes-indol.vercel.app/" />
+  <meta property="og:image" content="https://anime-quotes-indol.vercel.app/og-image.png" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Anime Quote Generator" />
+  <meta name="twitter:description" content="Generate random inspirational anime quotes from popular characters. Get fresh quotes every click!" />
+  <meta name="twitter:image" content="https://anime-quotes-indol.vercel.app/og-image.png" />
+  
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="quote-box">
-    <div id="quote">Click the button to get a quote.</div>
-    <div id="author" style="margin-top: 10px; font-style: italic;"></div>
-    <div id="show" style="margin-top: 5px;"></div>
-    <button onclick="getQuote()">New Quote</button>
-  </div>
+  <main class="quote-box" role="main" aria-label="Anime quote generator">
+    <h1 id="quote">Click the button to get a quote.</h1>
+    <h2 id="author" aria-live="polite" style="margin-top: 10px; font-style: italic;"></h2>
+    <div id="show" style="margin-top: 5px;" aria-live="polite"></div>
+    <button onclick="getQuote()" aria-label="Generate new anime quote">New Quote</button>
+  </main>
 
   <script src="script.js"></script>
 </body>
