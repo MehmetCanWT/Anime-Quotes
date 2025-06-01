@@ -1,0 +1,10 @@
+#show a {
+  color: #00bcd4;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#show a:hover {
+  text-decoration: underline;
+}
