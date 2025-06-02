@@ -1,127 +1,116 @@
 async function getQuote() {
   const quoteElem = document.getElementById('quote');
   const authorElem = document.getElementById('author');
+  const showElem = document.getElementById('show');
   const animeImage = document.getElementById('anime-image');
   const animeTitle = document.getElementById('anime-title');
   const animeDetails = document.getElementById('anime-details');
+
   const animeRating = document.getElementById('anime-rating');
   const animeStatus = document.getElementById('anime-status');
   const animeRank = document.getElementById('anime-rank');
   const animeTags = document.getElementById('anime-tags');
 
-  // Başlangıçta loading göster
-  quoteElem.textContent = "Loading quote...";
-  authorElem.textContent = "";
-  animeImage.src = "";
-  animeTitle.textContent = "";
-  animeDetails.textContent = "";
-  animeRating.textContent = "";
-  animeStatus.textContent = "";
-  animeRank.textContent = "";
-  animeTags.textContent = "";
+  [quoteElem, authorElem, showElem, animeImage, animeTitle, animeDetails, animeRating, animeStatus, animeRank, animeTags]
+    .forEach(el => el.classList.add('fade'));
 
-  // Yurippe API'den rastgele alıntı çek
-  let quoteData;
+  await new Promise(resolve => setTimeout(resolve, 500));
+
+  let item;
   try {
-    const res = await fetch('https://yurippe.vercel.app/api/quotes?random=1');
-    const json = await res.json();
-    quoteData = json[0];
+    const response = await fetch('https://yurippe.vercel.app/api/quotes?random=1');
+    const data = await response.json();
+    item = data[0];
   } catch {
-    quoteElem.textContent = "Quote could not be loaded.";
-    return;
+    item = null;
   }
 
-  if (!quoteData) {
-    quoteElem.textContent = "Quote not found.";
-    return;
-  }
-
-  quoteElem.textContent = `"${quoteData.quote}"`;
-  authorElem.textContent = `- ${quoteData.character}`;
-
-  // Anime adına göre Jikan'dan bilgi al
-  const animeName = quoteData.show;
-  let animeInfo = null;
-
-  try {
-    const res = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(animeName)}&limit=1`);
-    const json = await res.json();
-    if (json.data && json.data.length > 0) {
-      animeInfo = json.data[0];
-    }
-  } catch (e) {
-    console.error("Jikan API error:", e);
-  }
-
-  if (animeInfo) {
-    animeImage.src = animeInfo.images.jpg.image_url;
-    animeImage.alt = animeInfo.title + " poster";
-    animeTitle.innerHTML = `<a href="${animeInfo.url}" target="_blank" rel="noopener noreferrer">${animeInfo.title}</a>`;
-    animeDetails.textContent = `Type: ${animeInfo.type} | Episodes: ${animeInfo.episodes || "?"} | Aired: ${animeInfo.aired.string || "?"}`;
-    animeRating.textContent = `Rating: ${animeInfo.rating || "?"}`;
-    animeStatus.textContent = `Status: ${animeInfo.status || "?"}`;
-    animeRank.textContent = animeInfo.rank ? `Rank: #${animeInfo.rank}` : "";
-    animeTags.textContent = animeInfo.genres.length > 0 ? `Genres: ${animeInfo.genres.map(g => g.name).join(', ')}` : "";
-  } else {
+  if (!item) {
+    quoteElem.innerText = "Quote could not be loaded.";
+    authorElem.innerText = "";
+    showElem.textContent = "";
     animeImage.src = "";
-    animeImage.alt = "No image available";
-    animeTitle.textContent = animeName;
+    animeImage.alt = "";
+    animeTitle.textContent = "";
     animeDetails.textContent = "";
     animeRating.textContent = "";
     animeStatus.textContent = "";
     animeRank.textContent = "";
     animeTags.textContent = "";
+    fadeIn();
+    return;
   }
-}
 
-// Top animeleri çek ve render et
-async function fetchAndRenderTopAnime() {
-  const categories = [
-    { id: 'top-airing', filter: 'airing', title: 'Top Airing' },
-    { id: 'top-upcoming', filter: 'upcoming', title: 'Top Upcoming' },
-    { id: 'most-popular', filter: 'bypopularity', title: 'Most Popular' },
-    { id: 'highest-rated', filter: 'favorite', title: 'Highest Rated' }
-  ];
+  const quoteText = item.quote || "Quote not found.";
+  const character = item.character || "Unknown";
+  const show = item.show || "Unknown";
 
-  for (const cat of categories) {
-    const container = document.querySelector(`#${cat.id} .list-content`);
-    container.textContent = 'Loading...';
-
-    try {
-      const res = await fetch(`https://api.jikan.moe/v4/top/anime?type=tv&filter=${cat.filter}&limit=5`);
-      const json = await res.json();
-
-      if (!json.data || json.data.length === 0) {
-        container.textContent = "No anime found.";
-        continue;
-      }
-
-      container.innerHTML = json.data.map(anime => {
-        const malUrl = `https://myanimelist.net/anime/${anime.mal_id}`;
-        const imageUrl = anime.images.jpg.image_url;
-        const score = anime.score ? anime.score.toFixed(2) : "N/A";
-
-        return `
-          <div class="top-anime-box" role="listitem" tabindex="0" aria-label="${anime.title}, rating ${score}">
-            <a href="${malUrl}" target="_blank" rel="noopener noreferrer" class="top-anime-link">
-              <img src="${imageUrl}" alt="${anime.title} poster" class="top-anime-img" />
-              <div class="top-anime-info">
-                <div class="top-anime-title">${anime.title}</div>
-                <div class="top-anime-rating">Rating: ${score}</div>
-              </div>
-            </a>
-          </div>
-        `;
-      }).join('');
-    } catch (e) {
-      container.textContent = "Failed to load.";
-      console.error(e);
+  let animeInfo = null;
+  try {
+    const jikanResponse = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(show)}&limit=1`);
+    const jikanData = await jikanResponse.json();
+    if (jikanData.data && jikanData.data.length > 0) {
+      animeInfo = jikanData.data[0];
     }
+  } catch (error) {
+    console.error("Jikan API error:", error);
+    animeInfo = null;
   }
+
+  quoteElem.innerText = quoteText;
+  authorElem.innerText = `– ${character}`;
+
+  if (animeInfo) {
+    animeImage.src = animeInfo.images.jpg.maximum_image_url
+      || animeInfo.images.jpg.large_image_url
+      || animeInfo.images.jpg.image_url
+      || "";
+    animeImage.alt = animeInfo.title + " poster";
+
+    animeTitle.innerHTML = `<a href="${animeInfo.url}" target="_blank" rel="noopener noreferrer">${animeInfo.title}</a>`;
+
+    const aired = animeInfo.aired?.string || "Unknown air date";
+    const episodes = animeInfo.episodes || "Unknown episodes";
+    const type = animeInfo.type || "Unknown type";
+    const rating = animeInfo.rating || "Unknown rating";
+    const status = animeInfo.status || "Unknown status";
+    const rank = animeInfo.rank || "No ranking";
+
+    const tags = animeInfo.genres?.map(g => g.name) || [];
+    if (animeInfo.themes) {
+      const themeNames = animeInfo.themes.map(t => t.name);
+      themeNames.forEach(t => {
+        if (!tags.includes(t)) tags.push(t);
+      });
+    }
+
+    animeDetails.textContent = `${type} | Episodes: ${episodes} | Aired: ${aired}`;
+    animeRating.textContent = `Rating: ${rating}`;
+    animeStatus.textContent = `Status: ${status}`;
+    animeRank.textContent = `Ranking: ${rank}`;
+    animeTags.textContent = `Tags: ${tags.join(', ')}`;
+
+    showElem.textContent = "";
+  } else {
+    animeImage.src = "";
+    animeImage.alt = "No image available";
+    animeTitle.textContent = show;
+    animeDetails.textContent = "";
+    animeRating.textContent = "";
+    animeStatus.textContent = "";
+    animeRank.textContent = "";
+    animeTags.textContent = "";
+    showElem.textContent = show;
+  }
+
+  function fadeIn() {
+    [quoteElem, authorElem, showElem, animeImage, animeTitle, animeDetails, animeRating, animeStatus, animeRank, animeTags]
+      .forEach(el => el.classList.remove('fade'));
+  }
+
+  fadeIn();
 }
 
-// Sayfa yüklenince çalıştır
 window.addEventListener('DOMContentLoaded', () => {
   getQuote();
-  fetchAndRenderTopAnime();
 });
