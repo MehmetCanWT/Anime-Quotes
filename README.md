@@ -1,37 +1,69 @@
-Anime Quote Generator
-This project fetches random anime quotes using the Yurippe Anime Quote API and retrieves detailed anime information like posters, genres, episodes, rating, tags, and more via the Jikan API.
+# 🎌 Anime Quote Generator
 
-Features
-Random anime quotes: Fetches character names, quotes, and anime titles from Yurippe Anime Quote API.
+A sleek web app that fetches random anime quotes and displays detailed information about the anime, powered by two open APIs: **Yurippe Anime Quote API** and **Jikan API**.
 
-Anime details: Uses Jikan API to get additional anime info such as poster images, type, episode count, airing status, MyAnimeList ranking, and genre tags.
+---
 
-Clickable anime title: Opens the corresponding anime page on MyAnimeList in a new tab.
+## 🔥 Features
 
-Responsive and clean user interface.
+- ✨ Get **random anime quotes** with character names and anime titles.
+- 📖 Fetch **detailed anime data**: cover image, type, episodes, airing dates, rating, status, ranking, and genre/tags.
+- 🔗 Anime titles are **clickable**, directing users to the anime’s **MyAnimeList** page.
+- 💡 Smooth **fade-in animation** for dynamic content.
+- 🧠 Responsive and clean layout with semantic HTML and accessible labels.
 
-“New Quote” button to refresh and load another quote and anime info.
+---
 
-APIs Used
-Yurippe Anime Quote API
-Endpoint: https://yurippe.vercel.app/api/quotes?random=1
+## 📦 APIs Used
 
-Returns a random anime quote object containing the quote text, character, and anime/show title.
+### 📜 Yurippe Anime Quote API
 
-Jikan API
-Endpoint example: https://api.jikan.moe/v4/anime?q=<anime_title>&limit=1
+- **Endpoint**: `https://yurippe.vercel.app/api/quotes?random=1`
+- Returns a single random quote object:
 
-Returns detailed anime data from MyAnimeList, including images, airing dates, type, rating, status, ranking, and genre tags.
+```json
+{
+  "quote": "The world isn't perfect...",
+  "character": "Roy Mustang",
+  "show": "Fullmetal Alchemist: Brotherhood"
+}
+```
 
-This project picks the top result based on the search query for accuracy.
+### 📚 Jikan API (Unofficial MyAnimeList API)
 
-Usage
-Fetch a random quote from Yurippe API.
+- **Endpoint pattern**:  
+  `https://api.jikan.moe/v4/anime?q=<anime_title>&limit=1`
+- Searches for anime info using the title received from the quote.
+- Returns detailed anime metadata:
+  - `images.jpg.large_image_url`
+  - `aired.string`
+  - `episodes`
+  - `type`
+  - `rating`
+  - `status`
+  - `rank`
+  - `genres[]`, `themes[]`
+  - `url` (link to MyAnimeList page)
 
-Extract the anime title from the quote.
+> ✅ Always retrieves the **highest resolution** poster image available (`large_image_url`) for best quality.
 
-Search for that anime title on Jikan API and retrieve the most relevant anime info.
+---
 
-Display the quote, character, and anime info dynamically.
+## ⚙️ How It Works
 
-Provide a link to the anime’s MyAnimeList page.
+1. User clicks the **"New Quote"** button.
+2. App fetches a random quote from the **Yurippe API**.
+3. Using the anime title from the quote, the app queries **Jikan API**.
+4. The first matching result is used to extract detailed anime information.
+5. All data is rendered to the UI with smooth animations.
+6. Clicking the anime name opens its **MyAnimeList** page in a new tab.
+
+---
+
+## 🌐 Live Demo
+
+[https://anime-quotes-indol.vercel.app/](https://anime-quotes-indol.vercel.app/)
+
+---
+
+If you'd like, I can also write sections for installation, contribution, and deployment. Let me know!
