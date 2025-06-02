@@ -5,46 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Anime Quote Generator — Inspirational Quotes from Your Favorite Anime</title>
   <meta name="description" content="Generate random inspirational anime quotes from popular characters. Get fresh quotes every click!" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Anime Quote Generator" />
+  <meta property="og:description" content="Generate random inspirational anime quotes from popular characters. Get fresh quotes every click!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://anime-quotes-indol.vercel.app/" />
+  <meta property="og:image" content="https://anime-quotes-indol.vercel.app/og-image.png" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Anime Quote Generator" />
+  <meta name="twitter:description" content="Generate random inspirational anime quotes from popular characters. Get fresh quotes every click!" />
+  <meta name="twitter:image" content="https://anime-quotes-indol.vercel.app/og-image.png" />
+  
   <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="main-container" role="main" aria-label="Anime quote generator">
-
-    <section class="left-box">
-      <div class="quote-box">
-        <div class="quote-container">
-          <div class="anime-info" aria-label="Anime information">
-            <img id="anime-image" src="" alt="Anime Poster" />
-            <h3 id="anime-title"></h3>
-            <p id="anime-details"></p>
-            <p id="anime-rating"></p>
-            <p id="anime-status"></p>
-            <p id="anime-rank"></p>
-            <p id="anime-tags"></p>
-          </div>
-          <div class="quote-text">
-            <h1 id="quote">Click the button to get a quote.</h1>
-            <h2 id="author" aria-live="polite" style="margin-top: 10px; font-style: italic;"></h2>
-            <div id="show" style="margin-top: 5px;" aria-live="polite"></div>
-            <button onclick="getQuote()" aria-label="Generate new anime quote">New Quote</button>
-          </div>
-        </div>
+  <main class="quote-box" role="main" aria-label="Anime quote generator">
+    <div class="quote-container">
+      <div class="anime-info" aria-label="Anime information">
+        <img id="anime-image" src="" alt="Anime Poster" />
+        <h3 id="anime-title"></h3>
+        <p id="anime-details"></p>
+        <p id="anime-rating"></p>
+        <p id="anime-status"></p>
+        <p id="anime-rank"></p>
+        <p id="anime-tags"></p>
       </div>
-    </section>
 
-    <!-- Yeni eklenen Top Anime Listesi box'ı, Quote kısmından ayrı -->
-    <section class="right-box" aria-label="Top anime lists">
-      <h2>Top Anime Lists</h2>
-      <div id="top-lists-container">
-        <div id="top-airing"><h3>Top Airing</h3><div class="list-content">Loading...</div></div>
-        <div id="top-upcoming"><h3>Top Upcoming</h3><div class="list-content">Loading...</div></div>
-        <div id="most-popular"><h3>Most Popular</h3><div class="list-content">Loading...</div></div>
-        <div id="highest-rated"><h3>Highest Rated</h3><div class="list-content">Loading...</div></div>
+      <div class="quote-text">
+        <h1 id="quote">Click the button to get a quote.</h1>
+        <h2 id="author" aria-live="polite" style="margin-top: 10px; font-style: italic;"></h2>
+        <div id="show" style="margin-top: 5px;" aria-live="polite"></div>
+        <button onclick="getQuote()" aria-label="Generate new anime quote">New Quote</button>
       </div>
-    </section>
-
+    </div>
   </main>
+
   <script src="script.js"></script>
 </body>
 </html>
