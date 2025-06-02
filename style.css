@@ -3,7 +3,7 @@ body {
   background: linear-gradient(135deg, #00c6ff, #0072ff);
   color: #f5f5f5;
   display: flex;
-  flex-direction: column; /* Ana içeriğin ve yeni bölümlerin alt alta gelmesi için */
+  flex-direction: column; 
   align-items: center;
   min-height: 100vh;
   margin: 0;
@@ -13,15 +13,13 @@ body {
 
 .quote-box {
   width: 100%;
-  max-width: 700px; /* Ana alıntı kutusunun genişliği */
+  max-width: 700px; 
 }
 
 .quote-container {
   display: flex;
   gap: 30px;
   align-items: flex-start;
-  /* max-width: 700px; /* quote-box'a taşındı */
-  /* margin: 0 auto; /* quote-box'a taşındı */
 }
 
 .anime-info {
@@ -29,7 +27,7 @@ body {
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
   padding: 20px;
-  width: 300px; /* Biraz daraltıldı, esneklik için */
+  width: 300px; 
   flex-shrink: 0;
   text-align: center;
   color: #ccc;
@@ -39,9 +37,9 @@ body {
 }
 
 .anime-info img {
-  width: 100%; /* Konteynerine göre esnek */
-  max-width: 280px; /* Maksimum genişlik */
-  height: auto; /* Orantıyı koru */
+  width: 100%; 
+  max-width: 280px; 
+  height: auto; 
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0, 188, 212, 0.7);
   margin-bottom: 15px;
@@ -94,12 +92,12 @@ body {
   font-size: 1.2rem;
   font-style: italic;
   margin-bottom: 10px;
-  margin-top: 10px; /* Inline style'dan taşındı */
+  margin-top: 10px; 
   color: #ccc;
 }
 
 #show {
-  margin-top: 5px; /* Inline style'dan taşındı */
+  margin-top: 5px; 
 }
 
 #show a {
@@ -135,30 +133,39 @@ button:hover {
   box-shadow: 0 8px 20px rgba(0, 114, 255, 0.5);
 }
 
-/* Basit fade animasyonu */
 .fade {
   opacity: 0.3;
-  transition: opacity 0.5s ease-in-out; /* ease-in-out eklendi */
+  transition: opacity 0.5s ease-in-out; 
 }
 
-/* Yeni Eklenen Bölümler İçin Stiller */
+/* --- YENİ EKLENEN BÖLÜMLER İÇİN STİLLER (GÜNCELLENDİ) --- */
 .more-anime-sections {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 30px; /* Bölüm kartları arası boşluk */
   margin: 40px auto 20px auto;
   width: 100%;
-  max-width: 900px; /* Alıntı kutusundan biraz daha geniş olabilir */
-  padding: 0 10px; /* Yan padding azaltıldı, body'de genel padding var */
+  max-width: 900px; 
+  padding: 0 10px; 
   box-sizing: border-box;
 }
 
+.anime-list-section {
+  background: #1e1e1e; /* Her bölüme koyu kart arka planı */
+  border-radius: 16px; /* Diğer kartlarla tutarlı yuvarlaklık */
+  padding: 25px; /* İç boşluk */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); /* Diğer kartlarla tutarlı gölge */
+}
+
 .anime-list-section h2 {
-  font-size: 1.8rem;
+  font-size: 1.7rem; /* Biraz küçültüldü, isteğe bağlı */
   font-weight: 600;
-  color: #00bcd4;
-  margin-bottom: 20px;
+  color: #00bcd4; /* Vurgu rengi */
+  margin-top: 0; /* Üstteki padding'den dolayı margin sıfırlandı */
+  margin-bottom: 25px; /* Başlık ve grid arası boşluk */
   text-align: center;
+  padding-bottom: 10px; /* Başlığın altına hafif bir boşluk */
+  border-bottom: 1px solid #0072ff; /* Başlığın altına ayırıcı çizgi */
 }
 
 .anime-grid {
@@ -168,7 +175,7 @@ button:hover {
 }
 
 .anime-card {
-  background: #2a2a2a;
+  background: #2a2a2a; /* Kartların kendi arka planı */
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
   padding: 15px;
@@ -201,7 +208,7 @@ button:hover {
   margin: 8px 0;
   color: #00bcd4;
   line-height: 1.3em;
-  height: 2.6em; /* Yaklaşık 2 satır */
+  height: 2.6em; 
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -227,31 +234,35 @@ button:hover {
 /* Mobil Uyumluluk Ayarlamaları */
 @media (max-width: 768px) {
   .quote-container {
-    flex-direction: column; /* Alıntı kutusundaki bölümleri alt alta dizer */
-    align-items: center; /* Ortalar */
+    flex-direction: column; 
+    align-items: center; 
     gap: 20px;
   }
   .anime-info {
-    width: 100%; /* Tam genişlik */
-    max-width: 350px; /* Maksimum genişlik belirle */
+    width: 100%; 
+    max-width: 350px; 
   }
   .quote-text {
     width: 100%;
-    max-width: 350px;  /* anime-info ile benzer genişlik */
+    max-width: 350px;  
     padding: 20px;
   }
   #quote {
     font-size: 1.4rem;
   }
   .more-anime-sections {
-    padding: 0 5px; /* Padding daha da azaltıldı */
+    padding: 0 5px; 
+  }
+  .anime-list-section {
+    padding: 20px;
+  }
+  .anime-list-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
   }
   .anime-grid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 15px;
-  }
-  .anime-list-section h2 {
-    font-size: 1.5rem;
   }
   .anime-card img {
     max-width: 110px;
@@ -261,10 +272,10 @@ button:hover {
 
 @media (max-width: 480px) {
   body {
-    padding: 10px; /* En küçük ekranlarda genel padding azaltıldı */
+    padding: 10px; 
   }
   .anime-info img {
-      max-width: 240px; /* Daha küçük resimler */
+      max-width: 240px; 
   }
   #quote {
     font-size: 1.2rem;
@@ -277,11 +288,16 @@ button:hover {
     padding: 12px 24px;
     font-size: 1rem;
   }
+  .anime-list-section {
+    padding: 15px;
+  }
+  .anime-list-section h2 {
+    font-size: 1.3rem;
+  }
   .anime-grid {
-    /* 2 sütunlu görünüm için veya tek sütun için minmax'ı ayarla */
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); /* Kartlar daha da küçülebilir */
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); 
   }
    .anime-card h3 {
     font-size: 0.9rem;
   }
-  }
+}
