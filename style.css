@@ -124,13 +124,27 @@ body {
   padding-left: 0;
 }
 
+/* Link styles for .top-lists-under */
 .top-lists-under a {
   color: #00bcd4;
   text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+  outline-offset: 2px;
+  cursor: pointer;
 }
 
-.top-lists-under a:hover {
+.top-lists-under a:hover,
+.top-lists-under a:focus {
+  color: #008ba3;
   text-decoration: underline;
+  outline: 2px solid #008ba3;
+  outline-offset: 2px;
+}
+
+.top-lists-under a:focus-visible {
+  outline: 3px solid #00bcd4;
+  outline-offset: 3px;
 }
 
 /* Top anime box styling */
@@ -142,14 +156,18 @@ body {
   border-radius: 8px;
   padding: 8px;
   align-items: center;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  color: #eaeaea;
+  outline-offset: 3px;
 }
 
 .top-anime-box:hover,
 .top-anime-box:focus {
   background-color: #00bcd4;
   color: #121212;
-  outline: none;
+  outline: 2px solid #008ba3;
+  outline-offset: 4px;
 }
 
 .top-anime-img {
@@ -170,11 +188,13 @@ body {
   font-weight: 600;
   font-size: 0.9rem;
   color: inherit;
+  user-select: none;
 }
 
 .top-anime-rating {
   font-size: 0.8rem;
   color: #ccc;
+  user-select: none;
 }
 
 @media (max-width: 900px) {
