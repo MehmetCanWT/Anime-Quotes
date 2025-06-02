@@ -22,9 +22,8 @@
             <p id="anime-rank"></p>
             <p id="anime-tags"></p>
           </div>
-
           <div class="quote-text">
-            <h1 id="quote">Loading quote...</h1>
+            <h1 id="quote">Click the button to get a quote.</h1>
             <h2 id="author" aria-live="polite" style="margin-top: 10px; font-style: italic;"></h2>
             <div id="show" style="margin-top: 5px;" aria-live="polite"></div>
             <button onclick="getQuote()" aria-label="Generate new anime quote">New Quote</button>
@@ -32,8 +31,8 @@
         </div>
       </div>
 
-      <!-- TOP ANIME LISTİ QUOTE ALTINA EKLENDİ -->
-      <section class="top-anime-lists" aria-label="Top anime lists" style="margin-top: 30px;">
+      <!-- Top list bölümü burada -->
+      <section aria-label="Top anime lists" style="margin-top: 40px;">
         <h2>Top Anime Lists</h2>
         <div id="top-airing"><h3>Top Airing</h3><div class="list-content">Loading...</div></div>
         <div id="top-upcoming"><h3>Top Upcoming</h3><div class="list-content">Loading...</div></div>
@@ -44,5 +43,11 @@
   </main>
 
   <script src="script.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      getQuote();
+      loadAllTopLists();
+    });
+  </script>
 </body>
 </html>
