@@ -1,9 +1,8 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #111;
-  color: #fff;
+  font-family: 'Rubik', sans-serif;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: #f5f5f5;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
@@ -11,41 +10,120 @@ body {
   padding: 20px;
 }
 
-.quote-box {
-  max-width: 600px;
+.quote-container {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.anime-info {
+  background: #2a2a2a;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  width: 350px;
+  flex-shrink: 0;
   text-align: center;
-  padding: 30px;
-  background: #222;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  color: #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-#quote {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
+.anime-info img {
+  width: 340px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 188, 212, 0.7);
+  margin-bottom: 15px;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  background-color: #4caf50;
-  color: white;
+.anime-info h3 {
+  font-size: 1.2rem;
+  margin: 5px 0;
+  color: #00bcd4;
+}
+
+.anime-info h3 a {
+  color: #00bcd4;
+  text-decoration: none;
   cursor: pointer;
 }
 
+.anime-info h3 a:hover {
+  text-decoration: underline;
+}
+
+.anime-info p {
+  font-size: 0.9rem;
+  line-height: 1.3;
+  margin: 4px 0;
+  color: #ccc;
+}
+
+.quote-text {
+  flex: 1;
+  background: #1e1e1e;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  padding: 30px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#quote {
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+  color: #fff;
+  min-height: 90px;
+}
+
+#author {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-bottom: 10px;
+  color: #ccc;
+}
+
+button {
+  margin-top: 20px;
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0, 114, 255, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  align-self: flex-start;
+  user-select: none;
+}
+
 button:hover {
-  background-color: #45a049;
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 114, 255, 0.5);
 }
 
 #show a {
   color: #00bcd4;
+  font-weight: bold;
   text-decoration: none;
-  cursor: pointer;
-  font-weight: 600;
 }
 
 #show a:hover {
   text-decoration: underline;
+}
+
+/* Basit fade animasyonu */
+.fade {
+  opacity: 0.3;
+  transition: opacity 0.5s ease;
 }
