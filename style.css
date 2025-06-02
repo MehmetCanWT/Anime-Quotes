@@ -1,10 +1,9 @@
-/* style.css - Ekran görüntüsüne göre güncellenmiş renkler */
+/* style.css - Renkler güncel, başlık kesilmesi için düzeltme geri alındı */
 @import url('https://fonts.googleapis.com/css2?family=Pirata+One&family=IM+Fell+English+SC&family=Rubik:wght@400;500;600&display=swap');
 
 body {
   font-family: 'IM Fell English SC', serif;
   background-color: #1a1a1a; /* Çok koyu arka plan */
-  /* background-image: url('path/to/your/koyu-arkaplan-dokusu.jpg'); */ /* İsteğe bağlı doku */
   color: #e0d8cc; /* Ana metin rengi - Açık, sıcak beyaz/bej */
   display: flex;
   flex-direction: column;
@@ -17,31 +16,30 @@ body {
 
 .quote-box {
   width: 100%;
-  max-width: 700px; /* Ana quote ve anime info alanını içeren kutu */
+  max-width: 700px;
 }
 
 .quote-container {
   display: flex;
   gap: 30px;
   align-items: flex-start;
-  background-color: #2f261f; /* Üst bölümün (quote ve anime info) arka planı - Koyu kahverengi */
-  padding: 20px; /* İç boşluk eklendi */
-  border-radius: 8px; /* Köşeler yuvarlatıldı */
-  border: 1px solid #4a3f35; /* Bölüm çerçevesi */
-  margin-bottom: 30px; /* Alt bölümlerle arasına boşluk */
+  background-color: #2f261f;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #4a3f35;
+  margin-bottom: 30px;
 }
 
 .anime-info {
-  background-color: #3e342b; /* Anime info kutusu arka planı - Bölümden biraz açık kahve */
-  /* background-image: url('path/to/your/soluk-dokulu-arkaplan.png'); */
-  border: 1px solid #5c5043; /* Kart çerçevesi - Yumuşak altın/kahve */
+  background-color: #3e342b;
+  border: 1px solid #5c5043;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   padding: 20px;
   width: 300px;
   flex-shrink: 0;
   text-align: center;
-  color: #e0d8cc; /* Kutu içi metin - Açık */
+  color: #e0d8cc;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -61,31 +59,30 @@ body {
   font-family: 'Pirata One', cursive;
   font-size: 1.4rem;
   margin: 5px 0;
-  color: #d4af37; /* Başlık rengi - Tok altın */
+  color: #d4af37;
   text-decoration: none;
 }
 
 .anime-info h3 a:hover {
   text-decoration: underline;
-  color: #e8b000; /* Hover için biraz daha parlak altın */
+  color: #e8b000;
 }
 
 .anime-info p {
   font-size: 0.9rem;
   line-height: 1.3;
   margin: 4px 0;
-  color: #b8b0a4; /* Detay metni - Ana metinden biraz soluk */
+  color: #b8b0a4;
 }
 
 .quote-text {
   flex: 1;
-  background-color: #3e342b; /* Alıntı kutusu arka planı - Anime info ile aynı */
-  /* background-image: url('path/to/your/soluk-dokulu-arkaplan.png'); */
-  border: 1px solid #5c5043; /* Kart çerçevesi */
+  background-color: #3e342b;
+  border: 1px solid #5c5043;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   padding: 30px;
-  color: #e0d8cc; /* Kutu içi metin */
+  color: #e0d8cc;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -93,24 +90,24 @@ body {
 
 #quote {
   font-family: 'Pirata One', cursive;
-  font-size: 1.7rem; /* Biraz küçültüldü */
+  font-size: 1.7rem;
   font-weight: normal;
   margin-bottom: 15px;
-  color: #d4af37; /* Alıntı rengi - Tok altın */
-  min-height: auto; /* Yüksekliği içeriğe göre ayarlasın */
+  color: #d4af37;
+  min-height: auto;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 #author {
   font-family: 'IM Fell English SC', serif;
-  font-size: 1.2rem; /* Biraz küçültüldü */
+  font-size: 1.2rem;
   font-style: normal;
   margin-bottom: 10px;
   margin-top: 10px;
-  color: #b8b0a4; /* Yazar ismi - Detay metni gibi */
+  color: #b8b0a4;
 }
 
-#show a { /* Bu kısım görünür değilse stilleri kaldırılabilir */
+#show a {
   color: #d4af37;
   font-weight: bold;
   text-decoration: none;
@@ -122,24 +119,24 @@ body {
 
 button {
   margin-top: 20px;
-  padding: 10px 20px; /* Biraz küçültüldü */
+  padding: 10px 20px;
   font-family: 'Pirata One', cursive;
-  font-size: 1.1rem; /* Biraz küçültüldü */
+  font-size: 1.1rem;
   font-weight: normal;
-  color: #1a1a1a; /* Buton metni - Koyu */
-  background-color: #d4af37; /* Buton arka planı - Tok altın */
-  border: 1px solid #a07e00; /* Buton çerçevesi - Altının koyu tonu */
+  color: #1a1a1a;
+  background-color: #d4af37;
+  border: 1px solid #a07e00;
   border-radius: 4px;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   transition: all 0.2s ease;
-  align-self: center; /* Ortalandı */
+  align-self: center;
   user-select: none;
   text-transform: uppercase;
 }
 
 button:hover {
-  background-color: #e8b000; /* Hover için biraz daha parlak altın */
+  background-color: #e8b000;
   color: #000000;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
 }
@@ -153,7 +150,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  margin: 0 auto 20px auto; /* Üstteki quote container'dan sonra margin-top sıfırlandı */
+  margin: 0 auto 20px auto;
   width: 100%;
   max-width: 900px;
   padding: 0 10px;
@@ -161,40 +158,39 @@ button:hover {
 }
 
 .anime-list-section {
-  background-color: #2f261f; /* Bölüm arka planı - Koyu kahverengi */
-  /* background-image: url('path/to/your/kahverengi-dokulu-arkaplan.png'); */
+  background-color: #2f261f;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-  border: 1px solid #4a3f35; /* Bölüm çerçevesi */
+  border: 1px solid #4a3f35;
 }
 
 .anime-list-section h2 {
   font-family: 'Pirata One', cursive;
-  font-size: 1.5rem; /* Biraz küçültüldü */
+  font-size: 1.5rem;
   font-weight: normal;
-  color: #d4af37; /* Bölüm başlığı - Tok altın */
+  color: #d4af37;
   margin-top: 0;
-  margin-bottom: 20px; /* Artırıldı */
+  margin-bottom: 20px;
   text-align: center;
-  padding-bottom: 10px; /* Artırıldı */
-  border-bottom: 1px solid #7a6a58; /* Bölüm başlığı alt çizgisi - Yumuşak altın/kahve */
+  padding-bottom: 10px;
+  border-bottom: 1px solid #7a6a58;
 }
 
 .anime-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Kart genişliği ayarlanabilir */
-  gap: 20px; /* Kartlar arası boşluk artırıldı */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
 }
 
 .anime-card {
-  background-color: #3e342b; /* Anime kartı arka planı - Bölümden biraz açık kahve */
+  background-color: #3e342b;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-  border: 1px solid #5c5043; /* Kart çerçevesi - Yumuşak altın/kahve */
-  padding: 15px; /* İç boşluk artırıldı */
+  border: 1px solid #5c5043;
+  padding: 15px;
   text-align: center;
-  color: #b8b0a4; /* Kart içi genel metin */
+  color: #b8b0a4;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -202,29 +198,30 @@ button:hover {
 }
 
 .anime-card:hover {
-  transform: translateY(-4px); /* Hover efekti biraz daha belirgin */
+  transform: translateY(-4px);
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.7);
 }
 
 .anime-card img {
   width: 100%;
-  max-width: 130px; /* Resim boyutu ayarlandı */
-  height: 190px;   /* Resim boyutu ayarlandı */
+  max-width: 130px;
+  height: 190px;
   object-fit: cover;
   border-radius: 4px;
-  margin-bottom: 10px; /* Artırıldı */
+  margin-bottom: 10px;
   border: 1px solid #5c5043;
 }
 
+/* ANIME KARTI BAŞLIK DÜZELTMESİ (ÖNCEKİ ÇALIŞAN AYARLAR KULLANILDI) */
 .anime-card h3,
 .anime-card h3 a {
   font-family: 'Pirata One', cursive;
-  font-size: 0.9rem;
+  font-size: 0.9rem; /* Masaüstü için */
   font-weight: normal;
-  margin: 8px 0 4px 0; /* Üst boşluk artırıldı, alt boşluk azaltıldı */
-  color: #d4af37; /* Anime başlığı - Tok altın */
+  margin: 6px 0; /* Önceki çalışan margin değeri */
+  color: #d4af37;
   line-height: 1.25em;
-  height: 2.6em; /* İki satır için */
+  height: 2.6em;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -237,13 +234,13 @@ button:hover {
     color: #e8b000;
 }
 
-.anime-card p { /* Score yazısı */
-  font-size: 0.8rem; /* Biraz büyütüldü */
+.anime-card p {
+  font-size: 0.8rem;
   margin: 4px 0;
-  color: #a89f93; /* Daha soluk */
+  color: #a89f93;
 }
 
-/* Mobil Uyumluluk Ayarlamaları (Renkler ve bazı boşluklar genel temaya uyarlandı) */
+/* Mobil Uyumluluk Ayarlamaları */
 @media (max-width: 768px) {
   .quote-container {
     flex-direction: column;
@@ -253,7 +250,7 @@ button:hover {
   }
   .anime-info, .quote-text {
     width: 100%;
-    max-width: 400px; /* Biraz genişletildi */
+    max-width: 400px;
     padding: 15px;
   }
   #quote { font-size: 1.5rem; }
@@ -262,24 +259,34 @@ button:hover {
   .anime-list-section { padding: 15px; }
   .anime-list-section h2 { font-size: 1.3rem; margin-bottom: 15px; padding-bottom: 8px; }
 
-  .anime-grid { gap: 15px; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));} /* Mobil için kart min genişliği */
+  .anime-grid { gap: 15px; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));}
   .anime-card { padding: 10px; }
   .anime-card img { max-width: 110px; height: 160px; margin-bottom: 8px;}
-  .anime-card h3 { font-size: 0.85rem; line-height: 1.2em; height: 2.5em; margin: 6px 0 3px 0;}
+  .anime-card h3 { /* Mobil için önceki çalışan font boyutu */
+    font-size: 0.8rem; /* 768px için önceki çalışan değer */
+    line-height: 1.2em;
+    height: 2.5em;
+    margin: 6px 0; /* Masaüstü ile tutarlı margin */
+  }
   .anime-card p { font-size: 0.75rem; }
 }
 
 @media (max-width: 480px) {
   body { padding: 10px; }
   .quote-container { gap: 15px; padding: 10px;}
-  .anime-info, .quote-text { max-width: 100%; } /* Tam genişlik */
+  .anime-info, .quote-text { max-width: 100%; }
   #quote { font-size: 1.3rem; }
   #author { font-size: 1rem; }
   button { font-size: 1rem; padding: 8px 16px; }
 
   .anime-list-section h2 { font-size: 1.2rem; }
-  .anime-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); } /* Min genişlik daha da azaltıldı */
-  .anime-card img { max-width: 100px; height: 145px; } /* Resimler biraz daha küçültüldü */
-  .anime-card h3 { font-size: 0.8rem; line-height: 1.15em; height: 2.4em;}
-  .anime-card p { font-size: 0.7rem; }
+  .anime-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+  .anime-card img { max-width: 100px; height: 145px; }
+  .anime-card h3 { /* Mobil için önceki çalışan font boyutu */
+    font-size: 0.7rem; /* 480px için önceki çalışan değer */
+    line-height: 1.15em;
+    height: 2.4em;
+    margin: 6px 0; /* Masaüstü ile tutarlı margin */
   }
+  .anime-card p { font-size: 0.7rem; }
+}
