@@ -5,6 +5,7 @@ async function getQuote() {
   const animeImage = document.getElementById('anime-image');
   const animeTitle = document.getElementById('anime-title');
   const animeDetails = document.getElementById('anime-details');
+
   const animeRating = document.getElementById('anime-rating');
   const animeStatus = document.getElementById('anime-status');
   const animeRank = document.getElementById('anime-rank');
@@ -60,9 +61,14 @@ async function getQuote() {
   authorElem.innerText = `– ${character}`;
 
   if (animeInfo) {
-    animeImage.src = animeInfo.images.jpg.maximum_image_url || animeInfo.images.jpg.large_image_url || animeInfo.images.jpg.image_url || "";
+    animeImage.src = animeInfo.images.jpg.maximum_image_url
+      || animeInfo.images.jpg.large_image_url
+      || animeInfo.images.jpg.image_url
+      || "";
     animeImage.alt = animeInfo.title + " poster";
+
     animeTitle.innerHTML = `<a href="${animeInfo.url}" target="_blank" rel="noopener noreferrer">${animeInfo.title}</a>`;
+
     const aired = animeInfo.aired?.string || "Unknown air date";
     const episodes = animeInfo.episodes || "Unknown episodes";
     const type = animeInfo.type || "Unknown type";
@@ -72,8 +78,9 @@ async function getQuote() {
 
     const tags = animeInfo.genres?.map(g => g.name) || [];
     if (animeInfo.themes) {
-      animeInfo.themes.forEach(t => {
-        if (!tags.includes(t.name)) tags.push(t.name);
+      const themeNames = animeInfo.themes.map(t => t.name);
+      themeNames.forEach(t => {
+        if (!tags.includes(t)) tags.push(t);
       });
     }
 
@@ -82,7 +89,9 @@ async function getQuote() {
     animeStatus.textContent = `Status: ${status}`;
     animeRank.textContent = `Ranking: ${rank}`;
     animeTags.textContent = `Tags: ${tags.join(', ')}`;
+
     showElem.textContent = "";
+
   } else {
     animeImage.src = "";
     animeImage.alt = "No image available";
@@ -106,7 +115,7 @@ async function getQuote() {
 async function fetchTopAnime(category) {
   let url = '';
 
-  switch (category) {
+  switch(category) {
     case 'airing':
       url = 'https://api.jikan.moe/v4/top/anime?type=tv&filter=airing&limit=5';
       break;
@@ -139,36 +148,25 @@ function renderAnimeList(containerId, animeList) {
     container.innerHTML = "No anime found.";
     return;
   }
-  let html = '<ol style="padding-left: 20px;">';
+  let html = '';
   animeList.forEach(anime => {
-    html += `<li><a href="${anime.url}" target="_blank" rel="noopener noreferrer" style="color:#00bcd4;">${anime.title}</a> (Score: ${anime.score || "N/A"})</li>`;
+    const malUrl = `https://myanimelist.net/anime/${anime.mal_id}`;
+    const imageUrl = anime.images.jpg.image_url || anime.images.jpg.large_image_url || anime.images.jpg.small_image_url || '';
+    const score = anime.score ? anime.score.toFixed(2) : "N/A";
+
+    html += `
+      <div class="top-anime-box" role="listitem" tabindex="0" aria-label="${anime.title}, rating ${score}">
+        <a href="${malUrl}" target="_blank" rel="noopener noreferrer" class="top-anime-link">
+          <img src="${imageUrl}" alt="${anime.title} poster" class="top-anime-img" />
+          <div class="top-anime-info">
+            <div class="top-anime-title">${anime.title}</div>
+            <div class="top-anime-rating">Rating: ${score}</div>
+          </div>
+        </a>
+      </div>
+    `;
   });
-  html += '</ol>';
   container.innerHTML = html;
-}
-
-async function loadAllTopLists() {
-  const categories = [
-    { id: 'top-airing', filter: 'airing' },
-    { id: 'top-upcoming', filter: 'upcoming' },
-    { id: 'most-popular', filter: 'bypopularity' },
-    { id: 'highest-rated', filter: 'favorite' }
-  ];
-
-  let firstAnime = null;
-
-  for (const cat of categories) {
-    const animeList = await fetchTopAnime(cat.filter);
-    renderAnimeList(cat.id, animeList);
-
-    if (!firstAnime && animeList.length > 0) {
-      firstAnime = animeList[0];
-    }
-  }
-
-  if (firstAnime) {
-    updateAnimeInfo(firstAnime);
-  }
 }
 
 function updateAnimeInfo(anime) {
@@ -187,23 +185,4 @@ function updateAnimeInfo(anime) {
   animeImage.alt = anime.title + " poster";
   animeTitle.innerHTML = `<a href="${anime.url}" target="_blank" rel="noopener noreferrer">${anime.title}</a>`;
   animeDetails.textContent = `${anime.type} | Episodes: ${anime.episodes || "Unknown"} | Aired: ${anime.aired?.string || "Unknown"}`;
-  animeRating.textContent = `Rating: ${anime.rating || "Unknown"}`;
-  animeStatus.textContent = `Status: ${anime.status || "Unknown"}`;
-  animeRank.textContent = `Ranking: ${anime.rank || "No ranking"}`;
-
-  const tags = anime.genres?.map(g => g.name) || [];
-  if (anime.themes) {
-    anime.themes.forEach(t => {
-      if (!tags.includes(t.name)) tags.push(t.name);
-    });
-  }
-  animeTags.textContent = `Tags: ${tags.join(', ')}`;
-
-  quoteElem.textContent = "";
-  authorElem.textContent = "";
-  showElem.textContent = "";
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  loadAllTopLists();
-});
+  animeRating.text
