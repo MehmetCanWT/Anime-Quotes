@@ -91,7 +91,7 @@ async function getQuote() {
     const aired = animeInfo.aired?.string || "Unknown";
     const episodes = animeInfo.episodes || "Unknown";
     const type = animeInfo.type || "Unknown";
-    const rating = animeInfo.rating || "Unknown"; // This is content rating like PG-13
+    const rating = animeInfo.rating || "Unknown"; 
     const status = animeInfo.status || "Unknown";
     const rank = animeInfo.rank ? `Rank: #${animeInfo.rank}` : "Not ranked";
 
@@ -101,7 +101,7 @@ async function getQuote() {
     const allTags = [...new Set([...genres, ...themes, ...demographics])];
 
     if (animeDetails) animeDetails.textContent = `${type} | ${episodes || '?'} Episodes | ${aired}`;
-    if (animeRating) animeRating.textContent = `Content Rating: ${rating}`; // Clarified "Rating"
+    if (animeRating) animeRating.textContent = `Content Rating: ${rating}`; 
     if (animeStatus) animeStatus.textContent = `Status: ${status}`;
     if (animeRank) animeRank.textContent = rank;
     if (animeTags) animeTags.textContent = allTags.length > 0 ? `Tags: ${allTags.join(', ')}` : "No tags";
@@ -164,7 +164,7 @@ async function fetchJikanTopAnime(filter = null, limit = 10) {
   }
 }
 
-async function displayTopAnime(gridId, filter = null, errorText) { // Removed unused titleText
+async function displayTopAnime(gridId, filter = null, errorText) { 
   const gridElement = document.getElementById(gridId);
   if (!gridElement) return;
   
@@ -186,4 +186,5 @@ window.addEventListener('DOMContentLoaded', () => {
   getQuote();
   displayTopAnime('top-anime-grid', null, 'Most popular anime could not be loaded.');
   displayTopAnime('top-airing-grid', 'airing', 'Top airing anime could not be loaded.');
+  displayTopAnime('top-upcoming-grid', 'upcoming', 'Top upcoming anime could not be loaded.'); // Yeni bölüm için çağrı
 });
