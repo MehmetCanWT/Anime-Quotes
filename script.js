@@ -13,7 +13,11 @@ function applyFadeEffect(elements, action = 'add') {
 async function getQuote() {
   const quoteElem = document.getElementById('quote');
   const authorElem = document.getElementById('author');
-  const showElem = document.getElementById('show');
+  const showElem = document.getElementById('show'); // This element is in HTML but not actively used for display
+
+  const jikanPlaceholderContent = document.getElementById('jikan-placeholder-content');
+  const animeApiContent = document.getElementById('anime-api-content');
+
   const animeImage = document.getElementById('anime-image');
   const animeTitle = document.getElementById('anime-title');
   const animeDetails = document.getElementById('anime-details');
@@ -24,16 +28,23 @@ async function getQuote() {
 
   const placeholderPosterUrl = 'placeholder-poster.png';
 
-  const allElements = [
-    quoteElem, authorElem, showElem, animeImage, animeTitle,
-    animeDetails, animeRating, animeStatus, animeRank, animeTags
+  const elementsToFade = [
+    quoteElem, authorElem, animeApiContent
   ];
 
-  applyFadeEffect(allElements, 'add');
-  if (animeImage) {
+  applyFadeEffect(elementsToFade, 'add');
+  if (jikanPlaceholderContent) {
+    jikanPlaceholderContent.style.display = 'none';
+  }
+  if (animeApiContent) {
+    animeApiContent.style.display = 'flex'; // Make sure API content container is visible
+  }
+   if (animeImage) { // Set placeholder for the image within API content div
       animeImage.src = placeholderPosterUrl;
       animeImage.alt = "Loading anime poster...";
   }
+
+
   await new Promise(resolve => setTimeout(resolve, 300));
 
   let item;
@@ -51,17 +62,19 @@ async function getQuote() {
     if (quoteElem) quoteElem.innerText = "Could not load quote.";
     if (authorElem) authorElem.innerText = "";
     if (showElem) showElem.textContent = "";
+
     if (animeImage) {
         animeImage.src = placeholderPosterUrl;
         animeImage.alt = "Anime poster not available";
     }
-    if (animeTitle) animeTitle.textContent = "No information available";
+    if (animeTitle) animeTitle.innerHTML = "No information available"; // Use innerHTML to clear potential links
     if (animeDetails) animeDetails.textContent = "";
     if (animeRating) animeRating.textContent = "";
     if (animeStatus) animeStatus.textContent = "";
     if (animeRank) animeRank.textContent = "";
     if (animeTags) animeTags.textContent = "";
-    applyFadeEffect(allElements, 'remove');
+
+    applyFadeEffect(elementsToFade, 'remove');
     return;
   }
 
@@ -69,44 +82,44 @@ async function getQuote() {
   const character = item.character || "Unknown";
   const showNameFromQuoteApi = item.show || "Unknown";
 
-  let animeInfo = null;
+  let currentAnimeInfo = null;
   try {
     const cleanedShowName = showNameFromQuoteApi.replace(/\//g, ' ');
     const jikanResponse = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(cleanedShowName)}&limit=1&sfw=true`);
     if (!jikanResponse.ok) throw new Error(`Jikan API error: ${jikanResponse.status}`);
     const jikanData = await jikanResponse.json();
     if (jikanData.data && jikanData.data.length > 0) {
-      animeInfo = jikanData.data[0];
+      currentAnimeInfo = jikanData.data[0];
     }
   } catch (error) {
     console.error("Jikan API error:", error);
-    animeInfo = null;
+    currentAnimeInfo = null;
   }
 
   if (quoteElem) quoteElem.innerText = quoteText;
   if (authorElem) authorElem.innerText = `– ${character}`;
   if (showElem) showElem.textContent = "";
 
-  if (animeInfo) {
+  if (currentAnimeInfo) {
     if (animeImage) {
-      animeImage.src = animeInfo.images?.jpg?.large_image_url
-                    || animeInfo.images?.jpg?.image_url
+      animeImage.src = currentAnimeInfo.images?.jpg?.large_image_url
+                    || currentAnimeInfo.images?.jpg?.image_url
                     || placeholderPosterUrl;
-      animeImage.alt = (animeInfo.title_english || animeInfo.title || showNameFromQuoteApi) + " poster";
+      animeImage.alt = (currentAnimeInfo.title_english || currentAnimeInfo.title || showNameFromQuoteApi) + " poster";
     }
     if (animeTitle) {
-      animeTitle.innerHTML = `<a href="${animeInfo.url}" target="_blank" rel="noopener noreferrer">${animeInfo.title_english || animeInfo.title}</a>`;
+      animeTitle.innerHTML = `<a href="${currentAnimeInfo.url}" target="_blank" rel="noopener noreferrer">${currentAnimeInfo.title_english || currentAnimeInfo.title}</a>`;
     }
-    const aired = animeInfo.aired?.string || "Unknown";
-    const episodes = animeInfo.episodes || "Unknown";
-    const type = animeInfo.type || "Unknown";
-    const rating = animeInfo.rating || "Unknown";
-    const status = animeInfo.status || "Unknown";
-    const rank = animeInfo.rank ? `Rank: #${animeInfo.rank}` : "Not ranked";
+    const aired = currentAnimeInfo.aired?.string || "Unknown";
+    const episodes = currentAnimeInfo.episodes || "Unknown";
+    const type = currentAnimeInfo.type || "Unknown";
+    const rating = currentAnimeInfo.rating || "Unknown";
+    const status = currentAnimeInfo.status || "Unknown";
+    const rank = currentAnimeInfo.rank ? `Rank: #${currentAnimeInfo.rank}` : "Not ranked";
 
-    const genres = animeInfo.genres?.map(g => g.name) || [];
-    const themes = animeInfo.themes?.map(t => t.name) || [];
-    const demographics = animeInfo.demographics?.map(d => d.name) || [];
+    const genres = currentAnimeInfo.genres?.map(g => g.name) || [];
+    const themes = currentAnimeInfo.themes?.map(t => t.name) || [];
+    const demographics = currentAnimeInfo.demographics?.map(d => d.name) || [];
     const allTags = [...new Set([...genres, ...themes, ...demographics])];
 
     if (animeDetails) animeDetails.textContent = `${type} | ${episodes || '?'} Episodes | ${aired}`;
@@ -120,7 +133,7 @@ async function getQuote() {
         animeImage.src = placeholderPosterUrl;
         animeImage.alt = "Anime poster not available";
     }
-    if (animeTitle) animeTitle.textContent = showNameFromQuoteApi;
+    if (animeTitle) animeTitle.innerHTML = showNameFromQuoteApi; // Use innerHTML to clear potential links
     if (animeDetails) animeDetails.textContent = "Detailed anime information could not be loaded.";
     if (animeRating) animeRating.textContent = "";
     if (animeStatus) animeStatus.textContent = "";
@@ -128,7 +141,7 @@ async function getQuote() {
     if (animeTags) animeTags.textContent = "";
   }
 
-  applyFadeEffect(allElements, 'remove');
+  applyFadeEffect(elementsToFade, 'remove');
 }
 
 function createAnimeCard(anime) {
@@ -187,23 +200,22 @@ async function displayTopAnime(gridId, filter = null, errorText) {
 
   gridElement.innerHTML = '<p style="color:#e0d8cc; text-align:center;">Loading...</p>';
 
-  const animeList = await fetchJikanTopAnime(filter, 15); // Fetch a few more to have a chance to filter
+  const animeList = await fetchJikanTopAnime(filter, 15);
 
   if (animeList.length === 0) {
     gridElement.innerHTML = `<p style="color:#e0d8cc; text-align:center;">${errorText}</p>`;
     return;
   }
   gridElement.innerHTML = '';
-  const displayedMalIds = new Set(); // Keep track of displayed MAL IDs
+  const displayedMalIds = new Set();
 
   animeList.forEach(anime => {
-    if (anime.mal_id && !displayedMalIds.has(anime.mal_id)) { // Check if MAL ID exists and not already displayed
+    if (anime.mal_id && !displayedMalIds.has(anime.mal_id)) {
       gridElement.appendChild(createAnimeCard(anime));
-      displayedMalIds.add(anime.mal_id); // Add MAL ID to the set
+      displayedMalIds.add(anime.mal_id);
     }
   });
 
-  // If after filtering, the list is empty (though unlikely if API returned data)
   if (gridElement.children.length === 0 && animeList.length > 0) {
      gridElement.innerHTML = `<p style="color:#e0d8cc; text-align:center;">${errorText} (No unique items to display after filtering)</p>`;
   } else if (gridElement.children.length === 0 && animeList.length === 0) {
@@ -212,7 +224,8 @@ async function displayTopAnime(gridId, filter = null, errorText) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  getQuote();
+  // Do not call getQuote() here for initial load
+  // Placeholder will be shown by default via HTML and CSS
   displayTopAnime('top-anime-grid', null, 'Most popular anime could not be loaded.');
   displayTopAnime('top-airing-grid', 'airing', 'Top airing anime could not be loaded.');
   displayTopAnime('top-upcoming-grid', 'upcoming', 'Top upcoming anime could not be loaded.');

@@ -1,19 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Pirata+One&family=IM+Fell+English+SC&family=Rubik:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pirata+One&family=IM+Fell+English+SC&family=Rubik:wght@400;500;600;700&display=swap');
 
 :root {
-  --main-bg: #0d1117; /* Very dark blue, almost black */
-  --content-bg: #161b22; /* Dark grey-blue for content containers */
-  --card-bg: #21262d;    /* Slightly lighter grey-blue for cards */
-  --border-color: #30363d; /* Border color */
-  --text-primary: #c9d1d9; /* Light grey for primary text */
-  --text-secondary: #8b949e; /* Medium grey for secondary text */
-  --accent-color: #58a6ff;   /* Bright blue for accents */
-  --accent-hover: #79c0ff; /* Lighter blue for hover */
-  --title-color: #f0f6fc;    /* Very light grey/off-white for main titles */
+  --main-bg: #0d1117;
+  --content-bg: #161b22;
+  --card-bg: #21262d;
+  --border-color: #30363d;
+  --text-primary: #c9d1d9;
+  --text-secondary: #8b949e;
+  --accent-color: #58a6ff;
+  --accent-hover: #79c0ff;
+  --title-color: #f0f6fc;
+  --jikan-red: #e74c3c; /* Patreon red from screenshot */
+  --jikan-button-primary-bg: #238636; /* Green button from screenshot (approximated) */
+  --jikan-button-primary-hover-bg: #2ea043;
+  --jikan-button-secondary-bg: #21262d; /* Darker button from screenshot */
+  --jikan-button-secondary-hover-bg: #30363d;
+
 }
 
 body {
-  font-family: 'Rubik', sans-serif; /* Using Rubik for a cleaner UI feel */
+  font-family: 'Rubik', sans-serif;
   background-color: var(--main-bg);
   color: var(--text-primary);
   display: flex;
@@ -21,7 +27,7 @@ body {
   align-items: center;
   min-height: 100vh;
   margin: 0;
-  padding: 0; /* Body padding removed for full-width sections */
+  padding: 0;
   box-sizing: border-box;
   line-height: 1.6;
 }
@@ -51,7 +57,7 @@ body {
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   padding: 20px;
-  width: 320px;
+  width: 320px; /* Default width, will be overridden by placeholder if visible */
   flex-shrink: 0;
   text-align: center;
   color: var(--text-primary);
@@ -60,7 +66,141 @@ body {
   align-items: center;
 }
 
-.anime-info img {
+/* Styles for Jikan Placeholder Content */
+#jikan-placeholder-content {
+  display: flex; /* Initially visible by default via HTML structure */
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%; /* Takes full width of its .anime-info container */
+  text-align: left;
+  color: var(--text-primary);
+  font-family: 'Rubik', sans-serif; /* Ensure consistent font */
+}
+
+#jikan-placeholder-content .bannerInline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--jikan-red);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px; /* Rounded corners from screenshot */
+  text-decoration: none;
+  font-size: 0.85rem; /* Adjusted size */
+  font-weight: 500;
+  margin-bottom: 20px; /* Increased margin */
+}
+#jikan-placeholder-content .bannerInline .external-link {
+  stroke: white;
+  width: 16px; /* Adjusted icon size */
+  height: 16px;
+}
+
+#jikan-placeholder-content .type--group-heading-and-content h1 {
+  font-family: 'Rubik', sans-serif;
+  font-size: 2.5rem; /* Larger H1 from screenshot */
+  font-weight: 600; /* Bold H1 */
+  color: var(--title-color);
+  margin-bottom: 10px;
+}
+
+#jikan-placeholder-content .type--group-heading-and-content p {
+  font-family: 'Rubik', sans-serif;
+  font-size: 1rem; /* Larger paragraph text */
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+#jikan-placeholder-content .type--group-heading-and-content p strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+#jikan-placeholder-content .infoDisplayGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px; /* Increased gap */
+  margin-bottom: 25px;
+}
+
+#jikan-placeholder-content .infoDisplay {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* Increased gap */
+  background-color: var(--content-bg); /* Match container background */
+  padding: 8px 12px; /* Increased padding */
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+#jikan-placeholder-content .infoDisplay:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+#jikan-placeholder-content .infoDisplay svg {
+  stroke: var(--text-secondary);
+  width: 18px; /* Adjusted icon size */
+  height: 18px;
+  transition: stroke 0.2s ease;
+}
+#jikan-placeholder-content .infoDisplay:hover svg {
+  stroke: var(--accent-color);
+}
+
+#jikan-placeholder-content .buttonGroup {
+  display: flex;
+  gap: 12px; /* Increased gap */
+}
+
+#jikan-placeholder-content .button {
+  padding: 10px 18px; /* Adjusted padding */
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  border: 1px solid transparent; /* Base border */
+}
+#jikan-placeholder-content .button--type-primary {
+  background-color: var(--accent-color); /* Using main accent color */
+  color: var(--main-bg); /* Dark text for contrast */
+  border-color: var(--accent-color);
+}
+#jikan-placeholder-content .button--type-primary:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+#jikan-placeholder-content .button--type-secondary-outline {
+  background-color: transparent;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+}
+#jikan-placeholder-content .button--type-secondary-outline:hover {
+  background-color: var(--accent-color);
+  color: var(--main-bg);
+}
+#jikan-placeholder-content .button--type-secondary-outline .external-link {
+  stroke: var(--accent-color);
+  width: 16px;
+  height: 16px;
+  transition: stroke 0.2s ease;
+}
+#jikan-placeholder-content .button--type-secondary-outline:hover .external-link {
+  stroke: var(--main-bg);
+}
+
+
+#anime-api-content {
+  /* Styles for when API content is loaded */
+}
+
+#anime-api-content img {
   width: 100%;
   max-width: 280px;
   height: auto;
@@ -69,12 +209,12 @@ body {
   border-radius: 4px;
   border: 1px solid var(--border-color);
   margin-bottom: 15px;
-  background-color: var(--content-bg); /* Placeholder background */
+  background-color: var(--content-bg);
 }
 
-.anime-info h3,
-.anime-info h3 a {
-  font-family: 'Rubik', sans-serif; /* Cleaner font for this title */
+#anime-api-content h3,
+#anime-api-content h3 a {
+  font-family: 'Rubik', sans-serif;
   font-size: 1.3rem;
   font-weight: 500;
   margin: 10px 0;
@@ -82,12 +222,12 @@ body {
   text-decoration: none;
 }
 
-.anime-info h3 a:hover {
+#anime-api-content h3 a:hover {
   text-decoration: underline;
   color: var(--accent-hover);
 }
 
-.anime-info p {
+#anime-api-content p {
   font-family: 'Rubik', sans-serif;
   font-size: 0.85rem;
   line-height: 1.5;
@@ -109,7 +249,7 @@ body {
 }
 
 #quote {
-  font-family: 'IM Fell English SC', serif; /* Thematic font for quote */
+  font-family: 'IM Fell English SC', serif;
   font-size: 1.8rem;
   font-weight: normal;
   margin-bottom: 20px;
@@ -127,7 +267,7 @@ body {
   color: var(--text-secondary);
 }
 
-#show a { /* This element is not visible in the HTML provided by user */
+#show a {
   color: var(--accent-color);
   font-weight: bold;
   text-decoration: none;
@@ -137,13 +277,13 @@ body {
   text-decoration: underline;
 }
 
-button {
+button { /* This is the "New Quote" button */
   margin-top: 25px;
   padding: 10px 25px;
-  font-family: 'Rubik', sans-serif; /* Cleaner font for button */
+  font-family: 'Rubik', sans-serif;
   font-size: 1rem;
   font-weight: 500;
-  color: var(--main-bg); /* Dark text on light button */
+  color: var(--main-bg);
   background-color: var(--accent-color);
   border: none;
   border-radius: 6px;
@@ -179,12 +319,12 @@ button:hover {
 .anime-list-section {
   background-color: transparent;
   border-radius: 0;
-  padding: 0 20px; /* Padding for section content */
+  padding: 0 20px;
   box-sizing: border-box;
 }
 
 .anime-list-section h2 {
-  font-family: 'Rubik', sans-serif; /* Cleaner font for section titles */
+  font-family: 'Rubik', sans-serif;
   font-size: 1.25rem;
   font-weight: 500;
   color: var(--title-color);
@@ -220,13 +360,13 @@ button:hover {
 }
 
 .anime-grid::-webkit-scrollbar-thumb:hover {
-  background: #484f58; /* Slightly lighter thumb on hover */
+  background: #484f58;
 }
 
 .anime-card {
   background-color: var(--card-bg);
   border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.4); /* Softer shadow */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
   border: 1px solid var(--border-color);
   padding: 0;
   text-align: left;
@@ -250,7 +390,7 @@ button:hover {
   border-radius: 6px 6px 0 0;
   margin-bottom: 0;
   border: none;
-  background-color: var(--content-bg); /* Placeholder background */
+  background-color: var(--content-bg);
 }
 
 .anime-card-info {
@@ -267,9 +407,9 @@ button:hover {
   font-size: 0.8rem;
   font-weight: 500;
   margin: 0 0 4px 0;
-  color: var(--text-primary); /* Lighter text for card titles */
+  color: var(--text-primary);
   line-height: 1.25em;
-  height: 2.5em; /* Approx 2 lines */
+  height: 2.5em;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -304,10 +444,10 @@ button:hover {
   }
   .anime-info, .quote-text {
     width: 100%;
-    max-width: 450px;
+    max-width: 450px; /* Keep this consistent for tablet */
     padding: 20px;
   }
-  .anime-info img {
+  #anime-api-content img {
     min-height: 150px;
   }
   #quote { font-size: 1.6rem; }
@@ -329,7 +469,7 @@ button:hover {
   .quote-box { padding: 10px; margin-top:10px; }
   .quote-container { gap: 15px; padding: 15px;}
   .anime-info, .quote-text { max-width: 100%; padding: 15px; }
-   .anime-info img {
+   #anime-api-content img {
     min-height: 120px;
   }
   #quote { font-size: 1.5rem; }
