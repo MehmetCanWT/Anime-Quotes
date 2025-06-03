@@ -22,7 +22,6 @@ async function getQuote() {
   const animeRank = document.getElementById('anime-rank');
   const animeTags = document.getElementById('anime-tags');
 
-  // Varsayılan poster yolu (projenizdeki yola göre güncelleyin, örneğin ana dizindeyse 'placeholder-poster.png')
   const placeholderPosterUrl = 'placeholder-poster.png';
 
   const allElements = [
@@ -31,12 +30,11 @@ async function getQuote() {
   ];
 
   applyFadeEffect(allElements, 'add');
-  // Poster için hemen bir placeholder atayabiliriz veya hata durumunda
   if (animeImage) {
-      animeImage.src = placeholderPosterUrl; // Yükleme başlarken placeholder
+      animeImage.src = placeholderPosterUrl;
       animeImage.alt = "Loading anime poster...";
   }
-  await new Promise(resolve => setTimeout(resolve, 300)); // Fade için bekleme
+  await new Promise(resolve => setTimeout(resolve, 300));
 
   let item;
   try {
@@ -54,7 +52,7 @@ async function getQuote() {
     if (authorElem) authorElem.innerText = "";
     if (showElem) showElem.textContent = "";
     if (animeImage) {
-        animeImage.src = placeholderPosterUrl; // Hata durumunda placeholder
+        animeImage.src = placeholderPosterUrl;
         animeImage.alt = "Anime poster not available";
     }
     if (animeTitle) animeTitle.textContent = "No information available";
@@ -73,7 +71,6 @@ async function getQuote() {
 
   let animeInfo = null;
   try {
-    // Anime adında "/" varsa sorun çıkarabileceği için encodeURIComponent'den önce temizleyelim
     const cleanedShowName = showNameFromQuoteApi.replace(/\//g, ' ');
     const jikanResponse = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(cleanedShowName)}&limit=1&sfw=true`);
     if (!jikanResponse.ok) throw new Error(`Jikan API error: ${jikanResponse.status}`);
@@ -88,13 +85,13 @@ async function getQuote() {
 
   if (quoteElem) quoteElem.innerText = quoteText;
   if (authorElem) authorElem.innerText = `– ${character}`;
-  if (showElem) showElem.textContent = ""; // Eğer #show elementi kullanılmıyorsa bu satır kalabilir veya kaldırılabilir.
+  if (showElem) showElem.textContent = "";
 
   if (animeInfo) {
     if (animeImage) {
       animeImage.src = animeInfo.images?.jpg?.large_image_url
                     || animeInfo.images?.jpg?.image_url
-                    || placeholderPosterUrl; // API'den resim gelmezse placeholder
+                    || placeholderPosterUrl;
       animeImage.alt = (animeInfo.title_english || animeInfo.title || showNameFromQuoteApi) + " poster";
     }
     if (animeTitle) {
@@ -118,9 +115,9 @@ async function getQuote() {
     if (animeRank) animeRank.textContent = rank;
     if (animeTags) animeTags.textContent = allTags.length > 0 ? `Tags: ${allTags.join(', ')}` : "No tags";
 
-  } else { // Jikan API'den bilgi gelmediyse veya hata oluştuysa
+  } else {
     if (animeImage) {
-        animeImage.src = placeholderPosterUrl; // Hata durumunda placeholder
+        animeImage.src = placeholderPosterUrl;
         animeImage.alt = "Anime poster not available";
     }
     if (animeTitle) animeTitle.textContent = showNameFromQuoteApi;
@@ -139,24 +136,29 @@ function createAnimeCard(anime) {
   card.className = 'anime-card';
 
   const img = document.createElement('img');
-  img.src = anime.images?.jpg?.image_url || 'placeholder-poster.png'; // Kartlar için de placeholder
-  img.alt = anime.title_english || anime.title;
+  img.src = anime.images?.jpg?.image_url || 'placeholder-poster.png';
+  img.alt = anime.title_english || anime.title || 'Anime Poster';
   img.loading = 'lazy';
+
+  const cardInfo = document.createElement('div');
+  cardInfo.className = 'anime-card-info';
 
   const titleElem = document.createElement('h3');
   const link = document.createElement('a');
   link.href = anime.url || '#';
   link.target = '_blank';
   link.rel = 'noopener noreferrer';
-  link.textContent = anime.title_english || anime.title;
+  link.textContent = anime.title_english || anime.title || 'Untitled Anime';
   titleElem.appendChild(link);
 
   const scoreElem = document.createElement('p');
   scoreElem.textContent = `Score: ${anime.score ? anime.score.toFixed(2) : 'N/A'}`;
 
+  cardInfo.appendChild(titleElem);
+  cardInfo.appendChild(scoreElem);
+
   card.appendChild(img);
-  card.appendChild(titleElem);
-  card.appendChild(scoreElem);
+  card.appendChild(cardInfo);
   return card;
 }
 
@@ -183,18 +185,30 @@ async function displayTopAnime(gridId, filter = null, errorText) {
   const gridElement = document.getElementById(gridId);
   if (!gridElement) return;
 
-  gridElement.innerHTML = '<p style="color:#ccc; text-align:center;">Loading...</p>'; // Renk temaya göre ayarlanabilir
+  gridElement.innerHTML = '<p style="color:#e0d8cc; text-align:center;">Loading...</p>';
 
-  const animeList = await fetchJikanTopAnime(filter, 10);
+  const animeList = await fetchJikanTopAnime(filter, 15); // Fetch a few more to have a chance to filter
 
   if (animeList.length === 0) {
-    gridElement.innerHTML = `<p style="color:#ccc; text-align:center;">${errorText}</p>`; // Renk temaya göre ayarlanabilir
+    gridElement.innerHTML = `<p style="color:#e0d8cc; text-align:center;">${errorText}</p>`;
     return;
   }
   gridElement.innerHTML = '';
+  const displayedMalIds = new Set(); // Keep track of displayed MAL IDs
+
   animeList.forEach(anime => {
-    gridElement.appendChild(createAnimeCard(anime));
+    if (anime.mal_id && !displayedMalIds.has(anime.mal_id)) { // Check if MAL ID exists and not already displayed
+      gridElement.appendChild(createAnimeCard(anime));
+      displayedMalIds.add(anime.mal_id); // Add MAL ID to the set
+    }
   });
+
+  // If after filtering, the list is empty (though unlikely if API returned data)
+  if (gridElement.children.length === 0 && animeList.length > 0) {
+     gridElement.innerHTML = `<p style="color:#e0d8cc; text-align:center;">${errorText} (No unique items to display after filtering)</p>`;
+  } else if (gridElement.children.length === 0 && animeList.length === 0) {
+     gridElement.innerHTML = `<p style="color:#e0d8cc; text-align:center;">${errorText}</p>`;
+  }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -203,4 +217,3 @@ window.addEventListener('DOMContentLoaded', () => {
   displayTopAnime('top-airing-grid', 'airing', 'Top airing anime could not be loaded.');
   displayTopAnime('top-upcoming-grid', 'upcoming', 'Top upcoming anime could not be loaded.');
 });
-  

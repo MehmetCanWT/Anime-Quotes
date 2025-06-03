@@ -1,45 +1,60 @@
-/* style.css - Renkler güncel, başlık kesilmesi için düzeltme geri alındı */
 @import url('https://fonts.googleapis.com/css2?family=Pirata+One&family=IM+Fell+English+SC&family=Rubik:wght@400;500;600&display=swap');
 
+:root {
+  --main-bg: #0d1117; /* Very dark blue, almost black */
+  --content-bg: #161b22; /* Dark grey-blue for content containers */
+  --card-bg: #21262d;    /* Slightly lighter grey-blue for cards */
+  --border-color: #30363d; /* Border color */
+  --text-primary: #c9d1d9; /* Light grey for primary text */
+  --text-secondary: #8b949e; /* Medium grey for secondary text */
+  --accent-color: #58a6ff;   /* Bright blue for accents */
+  --accent-hover: #79c0ff; /* Lighter blue for hover */
+  --title-color: #f0f6fc;    /* Very light grey/off-white for main titles */
+}
+
 body {
-  font-family: 'IM Fell English SC', serif;
-  background-color: #1a1a1a; /* Çok koyu arka plan */
-  color: #e0d8cc; /* Ana metin rengi - Açık, sıcak beyaz/bej */
+  font-family: 'Rubik', sans-serif; /* Using Rubik for a cleaner UI feel */
+  background-color: var(--main-bg);
+  color: var(--text-primary);
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
   margin: 0;
-  padding: 20px;
+  padding: 0; /* Body padding removed for full-width sections */
   box-sizing: border-box;
+  line-height: 1.6;
 }
 
 .quote-box {
   width: 100%;
-  max-width: 700px;
+  max-width: 1100px;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 
 .quote-container {
   display: flex;
-  gap: 30px;
+  gap: 25px;
   align-items: flex-start;
-  background-color: #2f261f;
-  padding: 20px;
+  background-color: var(--content-bg);
+  padding: 25px;
   border-radius: 8px;
-  border: 1px solid #4a3f35;
-  margin-bottom: 30px;
+  border: 1px solid var(--border-color);
 }
 
 .anime-info {
-  background-color: #3e342b;
-  border: 1px solid #5c5043;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   padding: 20px;
-  width: 300px;
+  width: 320px;
   flex-shrink: 0;
   text-align: center;
-  color: #e0d8cc;
+  color: var(--text-primary);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,66 +64,71 @@ body {
   width: 100%;
   max-width: 280px;
   height: auto;
+  min-height: 180px;
+  object-fit: cover;
   border-radius: 4px;
-  border: 1px solid #5c5043;
+  border: 1px solid var(--border-color);
   margin-bottom: 15px;
+  background-color: var(--content-bg); /* Placeholder background */
 }
 
 .anime-info h3,
 .anime-info h3 a {
-  font-family: 'Pirata One', cursive;
-  font-size: 1.4rem;
-  margin: 5px 0;
-  color: #d4af37;
+  font-family: 'Rubik', sans-serif; /* Cleaner font for this title */
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 10px 0;
+  color: var(--accent-color);
   text-decoration: none;
 }
 
 .anime-info h3 a:hover {
   text-decoration: underline;
-  color: #e8b000;
+  color: var(--accent-hover);
 }
 
 .anime-info p {
-  font-size: 0.9rem;
-  line-height: 1.3;
-  margin: 4px 0;
-  color: #b8b0a4;
+  font-family: 'Rubik', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 5px 0;
+  color: var(--text-secondary);
 }
 
 .quote-text {
   flex: 1;
-  background-color: #3e342b;
-  border: 1px solid #5c5043;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   padding: 30px;
-  color: #e0d8cc;
+  color: var(--text-primary);
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 #quote {
-  font-family: 'Pirata One', cursive;
-  font-size: 1.7rem;
+  font-family: 'IM Fell English SC', serif; /* Thematic font for quote */
+  font-size: 1.8rem;
   font-weight: normal;
-  margin-bottom: 15px;
-  color: #d4af37;
+  margin-bottom: 20px;
+  color: var(--title-color);
   min-height: auto;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 #author {
   font-family: 'IM Fell English SC', serif;
   font-size: 1.2rem;
-  font-style: normal;
-  margin-bottom: 10px;
+  font-style: italic;
+  margin-bottom: 15px;
   margin-top: 10px;
-  color: #b8b0a4;
+  color: var(--text-secondary);
 }
 
-#show a {
-  color: #d4af37;
+#show a { /* This element is not visible in the HTML provided by user */
+  color: var(--accent-color);
   font-weight: bold;
   text-decoration: none;
 }
@@ -118,27 +138,28 @@ body {
 }
 
 button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-family: 'Pirata One', cursive;
-  font-size: 1.1rem;
-  font-weight: normal;
-  color: #1a1a1a;
-  background-color: #d4af37;
-  border: 1px solid #a07e00;
-  border-radius: 4px;
+  margin-top: 25px;
+  padding: 10px 25px;
+  font-family: 'Rubik', sans-serif; /* Cleaner font for button */
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--main-bg); /* Dark text on light button */
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: background-color 0.2s ease, transform 0.2s ease;
   align-self: center;
   user-select: none;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 button:hover {
-  background-color: #e8b000;
-  color: #000000;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
 .fade {
@@ -149,79 +170,106 @@ button:hover {
 .more-anime-sections {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  margin: 0 auto 20px auto;
+  gap: 25px;
+  margin: 0 0 20px 0;
   width: 100%;
-  max-width: 900px;
-  padding: 0 10px;
   box-sizing: border-box;
 }
 
 .anime-list-section {
-  background-color: #2f261f;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-  border: 1px solid #4a3f35;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0 20px; /* Padding for section content */
+  box-sizing: border-box;
 }
 
 .anime-list-section h2 {
-  font-family: 'Pirata One', cursive;
-  font-size: 1.5rem;
-  font-weight: normal;
-  color: #d4af37;
+  font-family: 'Rubik', sans-serif; /* Cleaner font for section titles */
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--title-color);
   margin-top: 0;
-  margin-bottom: 20px;
-  text-align: center;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #7a6a58;
+  margin-bottom: 15px;
+  text-align: left;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .anime-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 16px;
+  padding: 5px 0 15px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.anime-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.anime-grid::-webkit-scrollbar-track {
+  background: var(--main-bg);
+  border-radius: 4px;
+}
+
+.anime-grid::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+.anime-grid::-webkit-scrollbar-thumb:hover {
+  background: #484f58; /* Slightly lighter thumb on hover */
 }
 
 .anime-card {
-  background-color: #3e342b;
+  background-color: var(--card-bg);
   border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-  border: 1px solid #5c5043;
-  padding: 15px;
-  text-align: center;
-  color: #b8b0a4;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4); /* Softer shadow */
+  border: 1px solid var(--border-color);
+  padding: 0;
+  text-align: left;
+  color: var(--text-secondary);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  flex: 0 0 auto;
+  width: 140px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .anime-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.7);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
 }
 
 .anime-card img {
   width: 100%;
-  max-width: 130px;
-  height: 190px;
+  height: 200px;
   object-fit: cover;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  border: 1px solid #5c5043;
+  border-radius: 6px 6px 0 0;
+  margin-bottom: 0;
+  border: none;
+  background-color: var(--content-bg); /* Placeholder background */
 }
 
-/* ANIME KARTI BAŞLIK DÜZELTMESİ (ÖNCEKİ ÇALIŞAN AYARLAR KULLANILDI) */
+.anime-card-info {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
 .anime-card h3,
 .anime-card h3 a {
-  font-family: 'Pirata One', cursive;
-  font-size: 0.9rem; /* Masaüstü için */
-  font-weight: normal;
-  margin: 6px 0; /* Önceki çalışan margin değeri */
-  color: #d4af37;
+  font-family: 'Rubik', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+  color: var(--text-primary); /* Lighter text for card titles */
   line-height: 1.25em;
-  height: 2.6em;
+  height: 2.5em; /* Approx 2 lines */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -229,64 +277,72 @@ button:hover {
   -webkit-box-orient: vertical;
   text-decoration: none;
 }
+
 .anime-card h3 a:hover {
-    text-decoration: underline;
-    color: #e8b000;
+    text-decoration: none;
+    color: var(--accent-color);
 }
 
 .anime-card p {
-  font-size: 0.8rem;
-  margin: 4px 0;
-  color: #a89f93;
+  font-family: 'Rubik', sans-serif;
+  font-size: 0.75rem;
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.2;
 }
 
-/* Mobil Uyumluluk Ayarlamaları */
 @media (max-width: 768px) {
+  .quote-box {
+    padding: 15px;
+    margin-top: 15px;
+  }
   .quote-container {
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 15px;
+    padding: 20px;
   }
   .anime-info, .quote-text {
     width: 100%;
-    max-width: 400px;
-    padding: 15px;
+    max-width: 450px;
+    padding: 20px;
   }
-  #quote { font-size: 1.5rem; }
+  .anime-info img {
+    min-height: 150px;
+  }
+  #quote { font-size: 1.6rem; }
   #author { font-size: 1.1rem; }
 
-  .anime-list-section { padding: 15px; }
-  .anime-list-section h2 { font-size: 1.3rem; margin-bottom: 15px; padding-bottom: 8px; }
+  .anime-list-section { padding: 0 15px; }
+  .anime-list-section h2 { font-size: 1.15rem; margin-bottom: 12px; }
 
-  .anime-grid { gap: 15px; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));}
-  .anime-card { padding: 10px; }
-  .anime-card img { max-width: 110px; height: 160px; margin-bottom: 8px;}
-  .anime-card h3 { /* Mobil için önceki çalışan font boyutu */
-    font-size: 0.8rem; /* 768px için önceki çalışan değer */
-    line-height: 1.2em;
-    height: 2.5em;
-    margin: 6px 0; /* Masaüstü ile tutarlı margin */
-  }
-  .anime-card p { font-size: 0.75rem; }
+  .anime-grid { gap: 12px; }
+  .anime-card { width: 125px; }
+  .anime-card img { height: 175px; }
+  .anime-card-info { padding: 8px; }
+  .anime-card h3 { font-size: 0.75rem; height: 2.4em; margin: 0 0 3px 0;}
+  .anime-card p { font-size: 0.7rem; }
 }
 
 @media (max-width: 480px) {
-  body { padding: 10px; }
-  .quote-container { gap: 15px; padding: 10px;}
-  .anime-info, .quote-text { max-width: 100%; }
-  #quote { font-size: 1.3rem; }
-  #author { font-size: 1rem; }
-  button { font-size: 1rem; padding: 8px 16px; }
-
-  .anime-list-section h2 { font-size: 1.2rem; }
-  .anime-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
-  .anime-card img { max-width: 100px; height: 145px; }
-  .anime-card h3 { /* Mobil için önceki çalışan font boyutu */
-    font-size: 0.7rem; /* 480px için önceki çalışan değer */
-    line-height: 1.15em;
-    height: 2.4em;
-    margin: 6px 0; /* Masaüstü ile tutarlı margin */
+  body { padding: 0; }
+  .quote-box { padding: 10px; margin-top:10px; }
+  .quote-container { gap: 15px; padding: 15px;}
+  .anime-info, .quote-text { max-width: 100%; padding: 15px; }
+   .anime-info img {
+    min-height: 120px;
   }
-  .anime-card p { font-size: 0.7rem; }
+  #quote { font-size: 1.5rem; }
+  #author { font-size: 1rem; }
+  button { font-size: 0.9rem; padding: 8px 18px; }
+
+  .anime-list-section { padding: 0 10px; }
+  .anime-list-section h2 { font-size: 1.1rem; }
+
+  .anime-grid { gap: 10px; }
+  .anime-card { width: 110px; }
+  .anime-card img { height: 155px; }
+  .anime-card-info { padding: 6px; }
+  .anime-card h3 { font-size: 0.7rem; line-height: 1.2em; height: 2.4em; margin: 0 0 2px 0;}
+  .anime-card p { font-size: 0.65rem; }
 }
