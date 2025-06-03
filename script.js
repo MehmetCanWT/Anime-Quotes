@@ -26,7 +26,7 @@ async function getQuote() {
   const animeRank = document.getElementById('anime-rank');
   const animeTags = document.getElementById('anime-tags');
 
-  const placeholderPosterUrl = 'placeholder-poster.png';
+  const placeholderPosterUrl = './assets/placeholder-poster.png'; // Placeholder image URL
 
   const elementsToFade = [
     quoteElem, authorElem, animeApiContent
