@@ -62,7 +62,7 @@ A sleek web app that fetches random anime quotes and displays detailed informati
 
 ## 🌐 Live Demo
 
-[https://anime-quotes-indol.vercel.app/](https://anime-quotes-indol.vercel.app/)
+[Live](https://whispersofanime.netlify.app/)
 
 ---
 
