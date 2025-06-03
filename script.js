@@ -13,7 +13,7 @@ function applyFadeEffect(elements, action = 'add') {
 async function getQuote() {
   const quoteElem = document.getElementById('quote');
   const authorElem = document.getElementById('author');
-  const showElem = document.getElementById('show'); // This element is in HTML but not actively used for display
+  const showElem = document.getElementById('show');
 
   const jikanPlaceholderContent = document.getElementById('jikan-placeholder-content');
   const animeApiContent = document.getElementById('anime-api-content');
@@ -26,7 +26,7 @@ async function getQuote() {
   const animeRank = document.getElementById('anime-rank');
   const animeTags = document.getElementById('anime-tags');
 
-  const placeholderPosterUrl = 'https://whispersofanime.netlify.app/assest/placeholder-poster.png'; // Placeholder image URL
+  const placeholderPosterUrl = 'assest/placeholder-poster.png';
 
   const elementsToFade = [
     quoteElem, authorElem, animeApiContent
@@ -37,13 +37,12 @@ async function getQuote() {
     jikanPlaceholderContent.style.display = 'none';
   }
   if (animeApiContent) {
-    animeApiContent.style.display = 'flex'; // Make sure API content container is visible
+    animeApiContent.style.display = 'flex';
   }
-   if (animeImage) { // Set placeholder for the image within API content div
+   if (animeImage) {
       animeImage.src = placeholderPosterUrl;
       animeImage.alt = "Loading anime poster...";
   }
-
 
   await new Promise(resolve => setTimeout(resolve, 300));
 
@@ -67,7 +66,7 @@ async function getQuote() {
         animeImage.src = placeholderPosterUrl;
         animeImage.alt = "Anime poster not available";
     }
-    if (animeTitle) animeTitle.innerHTML = "No information available"; // Use innerHTML to clear potential links
+    if (animeTitle) animeTitle.innerHTML = "No information available";
     if (animeDetails) animeDetails.textContent = "";
     if (animeRating) animeRating.textContent = "";
     if (animeStatus) animeStatus.textContent = "";
@@ -133,7 +132,7 @@ async function getQuote() {
         animeImage.src = placeholderPosterUrl;
         animeImage.alt = "Anime poster not available";
     }
-    if (animeTitle) animeTitle.innerHTML = showNameFromQuoteApi; // Use innerHTML to clear potential links
+    if (animeTitle) animeTitle.innerHTML = showNameFromQuoteApi;
     if (animeDetails) animeDetails.textContent = "Detailed anime information could not be loaded.";
     if (animeRating) animeRating.textContent = "";
     if (animeStatus) animeStatus.textContent = "";
@@ -145,34 +144,152 @@ async function getQuote() {
 }
 
 function createAnimeCard(anime) {
-  const card = document.createElement('div');
-  card.className = 'anime-card';
+  const cardLink = document.createElement('a');
+  cardLink.href = anime.url || '#';
+  cardLink.className = 'anime-card';
+  cardLink.target = '_blank';
+  cardLink.rel = 'noopener noreferrer';
+  // cardLink.style = "will-change: transform; transition: all; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);"; // Example style, can be in CSS
+
+  const coverDiv = document.createElement('div');
+  coverDiv.className = 'anime-card-cover';
 
   const img = document.createElement('img');
   img.src = anime.images?.jpg?.image_url || 'placeholder-poster.png';
+  img.title = anime.title_english || anime.title || 'Anime Poster'; // Using title attribute as in example
   img.alt = anime.title_english || anime.title || 'Anime Poster';
   img.loading = 'lazy';
+  coverDiv.appendChild(img);
 
-  const cardInfo = document.createElement('div');
-  cardInfo.className = 'anime-card-info';
+  const overlayDiv = document.createElement('div');
+  overlayDiv.className = 'anime-card-overlay';
 
-  const titleElem = document.createElement('h3');
-  const link = document.createElement('a');
-  link.href = anime.url || '#';
-  link.target = '_blank';
-  link.rel = 'noopener noreferrer';
-  link.textContent = anime.title_english || anime.title || 'Untitled Anime';
-  titleElem.appendChild(link);
+  if (anime.rating) {
+    const ratedDiv = document.createElement('div');
+    ratedDiv.className = 'anime-card-rated';
+    const ratedSmall = document.createElement('small');
+    ratedSmall.textContent = anime.rating.replace(' - Teens 13 or older', '').replace(' - Violence & Profanity', '');
+    ratedDiv.appendChild(ratedSmall);
+    // overlayDiv.appendChild(ratedDiv); // Overlay can contain this, or it can be directly on cover
+    coverDiv.appendChild(ratedDiv); // As per example, rated is on cover, not overlay text part
+  }
+  // coverDiv.appendChild(overlayDiv); // The overlay for text seems to be part of cover in example for gradient
+  cardLink.appendChild(coverDiv);
 
-  const scoreElem = document.createElement('p');
-  scoreElem.textContent = `Score: ${anime.score ? anime.score.toFixed(2) : 'N/A'}`;
 
-  cardInfo.appendChild(titleElem);
-  cardInfo.appendChild(scoreElem);
+  const bodyDiv = document.createElement('div');
+  bodyDiv.className = 'anime-card-body';
 
-  card.appendChild(img);
-  card.appendChild(cardInfo);
-  return card;
+  if (anime.status) {
+    const statusChip = document.createElement('div');
+    statusChip.className = 'chip';
+    let statusText = anime.status;
+    if (statusText === 'Finished Airing') {
+        statusChip.classList.add('status-finished-airing');
+        statusText = 'Finished Airing';
+    } else if (statusText === 'Currently Airing') {
+        statusChip.classList.add('status-currently-airing');
+        statusText = 'Airing';
+    } else if (statusText === 'Not yet aired') {
+        statusChip.classList.add('status-not-yet-aired');
+        statusText = 'Not Yet Aired';
+    }
+    const statusSpan = document.createElement('span');
+    statusSpan.textContent = statusText;
+    statusChip.appendChild(statusSpan);
+    bodyDiv.appendChild(statusChip);
+  }
+
+  const metaDiv = document.createElement('div');
+  metaDiv.className = 'anime-card-meta';
+  const seasonSmall = document.createElement('small');
+  seasonSmall.textContent = anime.season ? `${anime.season.charAt(0).toUpperCase() + anime.season.slice(1)} ${anime.year || ''}` : (anime.aired?.prop?.from?.year || 'N/A');
+  metaDiv.appendChild(seasonSmall);
+
+  if (anime.episodes) {
+    const divider = document.createElement('div');
+    divider.className = 'divider'; // Assuming a CSS class for this
+    metaDiv.appendChild(divider);
+    const episodesSmall = document.createElement('small');
+    episodesSmall.textContent = `${anime.episodes} episodes`;
+    metaDiv.appendChild(episodesSmall);
+  }
+  bodyDiv.appendChild(metaDiv);
+
+  const titleP = document.createElement('h4'); // Using h4 for better semantics than p for title
+  titleP.className = 'anime-card-title';
+  titleP.textContent = anime.title_english || anime.title || 'Untitled Anime';
+  bodyDiv.appendChild(titleP);
+
+  const ratingDiv = document.createElement('div');
+  ratingDiv.className = 'anime-card-rating';
+
+  const scoreDiv = document.createElement('div');
+  scoreDiv.className = 'anime-card-score';
+  const scoreValDiv = document.createElement('div');
+  const scoreSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  scoreSvg.setAttribute('width', '16');
+  scoreSvg.setAttribute('height', '16');
+  scoreSvg.setAttribute('viewBox', '0 0 24 24');
+  scoreSvg.setAttribute('fill', 'none');
+  scoreSvg.setAttribute('stroke', 'currentColor');
+  scoreSvg.setAttribute('stroke-width', '1.5');
+  scoreSvg.setAttribute('stroke-linecap', 'round');
+  scoreSvg.setAttribute('stroke-linejoin', 'round');
+  scoreSvg.innerHTML = '<path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>';
+  scoreValDiv.appendChild(scoreSvg);
+  scoreValDiv.append(` ${anime.score ? anime.score.toFixed(1) : 'N/A'}`); // Example shows 1 decimal for score
+  scoreDiv.appendChild(scoreValDiv);
+  const usersSmall = document.createElement('small');
+  usersSmall.textContent = `${anime.members ? (anime.members / 1000).toFixed(0) + 'k users' : 'N/A users'}`;
+  scoreDiv.appendChild(usersSmall);
+  ratingDiv.appendChild(scoreDiv);
+
+  const rankDiv = document.createElement('div');
+  rankDiv.className = 'anime-card-rank';
+  const rankValDiv = document.createElement('div');
+  const rankSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  rankSvg.setAttribute('width', '16');
+  rankSvg.setAttribute('height', '16');
+  rankSvg.setAttribute('viewBox', '0 0 24 24');
+  rankSvg.setAttribute('fill', 'none');
+  rankSvg.setAttribute('stroke', 'currentColor');
+  rankSvg.setAttribute('stroke-width', '1.5');
+  rankSvg.setAttribute('stroke-linecap', 'round');
+  rankSvg.setAttribute('stroke-linejoin', 'round');
+  rankSvg.innerHTML = '<path d="M5 9l14 0"></path><path d="M5 15l14 0"></path><path d="M11 4l-4 16"></path><path d="M17 4l-4 16"></path>';
+  rankValDiv.appendChild(rankSvg);
+  rankValDiv.append(` ${anime.rank || 'N/A'}`);
+  rankDiv.appendChild(rankValDiv);
+  const rankTextSmall = document.createElement('small');
+  rankTextSmall.textContent = 'Ranking';
+  rankDiv.appendChild(rankTextSmall);
+  ratingDiv.appendChild(rankDiv);
+  bodyDiv.appendChild(ratingDiv);
+
+  const genresDiv = document.createElement('div');
+  genresDiv.className = 'anime-card-genres';
+  const genresToShow = (anime.genres || []).slice(0, 2); // Show max 2 genres
+  genresToShow.forEach(genre => {
+    const genreChip = document.createElement('div');
+    genreChip.className = 'chip genre-tag'; // Added genre-tag for specific styling
+    const genreSpan = document.createElement('span');
+    genreSpan.textContent = genre.name;
+    genreChip.appendChild(genreSpan);
+    genresDiv.appendChild(genreChip);
+  });
+  if (anime.genres && anime.genres.length > 2) {
+    const moreChip = document.createElement('div');
+    moreChip.className = 'chip genre-tag genre-more'; // Added genre-more for specific styling
+    const moreSpan = document.createElement('span');
+    moreSpan.textContent = `+${anime.genres.length - 2}`;
+    moreChip.appendChild(moreSpan);
+    genresDiv.appendChild(moreChip);
+  }
+  bodyDiv.appendChild(genresDiv);
+
+  cardLink.appendChild(bodyDiv);
+  return cardLink;
 }
 
 async function fetchJikanTopAnime(filter = null, limit = 10) {
@@ -224,8 +341,6 @@ async function displayTopAnime(gridId, filter = null, errorText) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  // Do not call getQuote() here for initial load
-  // Placeholder will be shown by default via HTML and CSS
   displayTopAnime('top-anime-grid', null, 'Most popular anime could not be loaded.');
   displayTopAnime('top-airing-grid', 'airing', 'Top airing anime could not be loaded.');
   displayTopAnime('top-upcoming-grid', 'upcoming', 'Top upcoming anime could not be loaded.');

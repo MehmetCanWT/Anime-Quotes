@@ -3,19 +3,20 @@
 :root {
   --main-bg: #0d1117;
   --content-bg: #161b22;
-  --card-bg: #21262d;
+  --card-bg: #0d1117; /* Card background will match body */
+  --card-body-bg: #161b22; /* Background for the text part of the card */
   --border-color: #30363d;
   --text-primary: #c9d1d9;
   --text-secondary: #8b949e;
   --accent-color: #58a6ff;
   --accent-hover: #79c0ff;
   --title-color: #f0f6fc;
-  --jikan-red: #e74c3c; /* Patreon red from screenshot */
-  --jikan-button-primary-bg: #238636; /* Green button from screenshot (approximated) */
-  --jikan-button-primary-hover-bg: #2ea043;
-  --jikan-button-secondary-bg: #21262d; /* Darker button from screenshot */
-  --jikan-button-secondary-hover-bg: #30363d;
-
+  --chip-bg: #21262d; /* Background for chips/tags */
+  --chip-text: var(--text-secondary);
+  --chip-status-finished: #238636; /* Green for finished status */
+  --chip-status-airing: #db6d28;   /* Orange for airing status */
+  --chip-status-not-yet: #6e7681; /* Grey for not yet aired */
+  --star-color: #ffc107; /* Gold for star icon */
 }
 
 body {
@@ -57,7 +58,7 @@ body {
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   padding: 20px;
-  width: 320px; /* Default width, will be overridden by placeholder if visible */
+  width: 320px;
   flex-shrink: 0;
   text-align: center;
   color: var(--text-primary);
@@ -66,47 +67,46 @@ body {
   align-items: center;
 }
 
-/* Styles for Jikan Placeholder Content */
 #jikan-placeholder-content {
-  display: flex; /* Initially visible by default via HTML structure */
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%; /* Takes full width of its .anime-info container */
+  width: 100%;
   text-align: left;
   color: var(--text-primary);
-  font-family: 'Rubik', sans-serif; /* Ensure consistent font */
+  font-family: 'Rubik', sans-serif;
 }
 
 #jikan-placeholder-content .bannerInline {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background-color: var(--jikan-red);
+  background-color: #e74c3c;
   color: white;
   padding: 8px 12px;
-  border-radius: 6px; /* Rounded corners from screenshot */
+  border-radius: 6px;
   text-decoration: none;
-  font-size: 0.85rem; /* Adjusted size */
+  font-size: 0.85rem;
   font-weight: 500;
-  margin-bottom: 20px; /* Increased margin */
+  margin-bottom: 20px;
 }
 #jikan-placeholder-content .bannerInline .external-link {
   stroke: white;
-  width: 16px; /* Adjusted icon size */
+  width: 16px;
   height: 16px;
 }
 
 #jikan-placeholder-content .type--group-heading-and-content h1 {
   font-family: 'Rubik', sans-serif;
-  font-size: 2.5rem; /* Larger H1 from screenshot */
-  font-weight: 600; /* Bold H1 */
+  font-size: 2.5rem;
+  font-weight: 600;
   color: var(--title-color);
   margin-bottom: 10px;
 }
 
 #jikan-placeholder-content .type--group-heading-and-content p {
   font-family: 'Rubik', sans-serif;
-  font-size: 1rem; /* Larger paragraph text */
+  font-size: 1rem;
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 25px;
@@ -119,16 +119,16 @@ body {
 #jikan-placeholder-content .infoDisplayGroup {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px; /* Increased gap */
+  gap: 12px;
   margin-bottom: 25px;
 }
 
 #jikan-placeholder-content .infoDisplay {
   display: inline-flex;
   align-items: center;
-  gap: 8px; /* Increased gap */
-  background-color: var(--content-bg); /* Match container background */
-  padding: 8px 12px; /* Increased padding */
+  gap: 8px;
+  background-color: var(--content-bg);
+  padding: 8px 12px;
   border-radius: 6px;
   border: 1px solid var(--border-color);
   font-size: 0.85rem;
@@ -142,7 +142,7 @@ body {
 }
 #jikan-placeholder-content .infoDisplay svg {
   stroke: var(--text-secondary);
-  width: 18px; /* Adjusted icon size */
+  width: 18px;
   height: 18px;
   transition: stroke 0.2s ease;
 }
@@ -152,11 +152,11 @@ body {
 
 #jikan-placeholder-content .buttonGroup {
   display: flex;
-  gap: 12px; /* Increased gap */
+  gap: 12px;
 }
 
 #jikan-placeholder-content .button {
-  padding: 10px 18px; /* Adjusted padding */
+  padding: 10px 18px;
   border-radius: 6px;
   text-decoration: none;
   font-size: 0.9rem;
@@ -165,11 +165,11 @@ body {
   align-items: center;
   gap: 8px;
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-  border: 1px solid transparent; /* Base border */
+  border: 1px solid transparent;
 }
 #jikan-placeholder-content .button--type-primary {
-  background-color: var(--accent-color); /* Using main accent color */
-  color: var(--main-bg); /* Dark text for contrast */
+  background-color: var(--accent-color);
+  color: var(--main-bg);
   border-color: var(--accent-color);
 }
 #jikan-placeholder-content .button--type-primary:hover {
@@ -193,11 +193,6 @@ body {
 }
 #jikan-placeholder-content .button--type-secondary-outline:hover .external-link {
   stroke: var(--main-bg);
-}
-
-
-#anime-api-content {
-  /* Styles for when API content is loaded */
 }
 
 #anime-api-content img {
@@ -277,7 +272,7 @@ body {
   text-decoration: underline;
 }
 
-button { /* This is the "New Quote" button */
+button {
   margin-top: 25px;
   padding: 10px 25px;
   font-family: 'Rubik', sans-serif;
@@ -348,88 +343,181 @@ button:hover {
 .anime-grid::-webkit-scrollbar {
   height: 8px;
 }
-
 .anime-grid::-webkit-scrollbar-track {
-  background: var(--main-bg);
+  background: var(--content-bg);
   border-radius: 4px;
 }
-
 .anime-grid::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 4px;
 }
-
 .anime-grid::-webkit-scrollbar-thumb:hover {
   background: #484f58;
 }
 
-.anime-card {
-  background-color: var(--card-bg);
+/* New Card Styles based on example */
+.anime-card { /* Replaces .cardAnime from example */
+  background-color: var(--card-bg); /* Match body for seamless look */
   border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4); /* Subtle shadow */
   border: 1px solid var(--border-color);
-  padding: 0;
-  text-align: left;
-  color: var(--text-secondary);
   display: flex;
-  flex-direction: column;
-  flex: 0 0 auto;
-  width: 140px;
+  flex-direction: column; /* Image on top, body below */
+  flex: 0 0 auto; /* Prevent shrinking */
+  width: 180px; /* Width of the card, adjust as needed */
+  height: auto; /* Height will be determined by content */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  text-decoration: none; /* Remove underline from link */
+  color: var(--text-primary); /* Default text color for card */
 }
 
 .anime-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.5);
 }
 
-.anime-card img {
+.anime-card-cover { /* Replaces .cardAnime__cover */
   width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 6px 6px 0 0;
-  margin-bottom: 0;
-  border: none;
-  background-color: var(--content-bg);
+  height: 250px; /* Fixed height for cover image, adjust as needed */
+  position: relative;
+  overflow: hidden; /* Ensure overlay elements are contained */
 }
 
-.anime-card-info {
-  padding: 10px;
+.anime-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block; /* Remove extra space below image */
+}
+
+.anime-card-overlay { /* Replaces .cardAnime__overlay */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  flex-grow: 1;
+  justify-content: flex-end; /* Align items to bottom */
+  padding: 8px;
+  box-sizing: border-box;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%); /* Gradient for text readability */
 }
 
-.anime-card h3,
-.anime-card h3 a {
-  font-family: 'Rubik', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
-  margin: 0 0 4px 0;
+.anime-card-rated { /* Replaces .cardAnime__rated */
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: rgba(0,0,0,0.6);
   color: var(--text-primary);
-  line-height: 1.25em;
-  height: 2.5em;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.anime-card-body { /* Replaces .cardAnime__body */
+  padding: 12px;
+  background-color: var(--card-inner-bg); /* Separate background for text area */
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Space between elements in card body */
+  flex-grow: 1; /* Allow body to take remaining space if card height is fixed */
+}
+
+.chip { /* General chip style from example */
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px; /* Pill shape */
+  font-size: 0.7rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.chip.status-finished-airing { background-color: var(--chip-status-finished); }
+.chip.status-currently-airing { background-color: var(--chip-status-airing); }
+.chip.status-not-yet-aired { background-color: var(--chip-status-not-yet); }
+
+.chip.genre-tag { /* For genre tags */
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  padding: 2px 6px;
+  font-size: 0.65rem;
+}
+.chip.genre-more { /* For "+1" genre tag */
+    background-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+
+.anime-card-meta { /* Replaces .cardAnime__meta */
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.anime-card-meta .divider { /* Replaces .divider--type-circle */
+  width: 4px;
+  height: 4px;
+  background-color: var(--text-secondary);
+  border-radius: 50%;
+  margin: 0 6px;
+}
+
+.anime-card-title { /* Replaces .cardAnime__title (was p, now h4 for semantics) */
+  font-family: 'Rubik', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+  margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.anime-card h3 a:hover {
-    text-decoration: none;
-    color: var(--accent-color);
-}
-
-.anime-card p {
-  font-family: 'Rubik', sans-serif;
-  font-size: 0.75rem;
-  margin: 0;
+.anime-card-rating { /* Replaces .cardAnime__rating */
+  display: flex;
+  justify-content: space-between; /* Score and Rank spread out */
+  align-items: center;
+  font-size: 0.8rem;
   color: var(--text-secondary);
-  line-height: 1.2;
 }
+
+.anime-card-score, .anime-card-rank { /* Replaces .cardAnime__score, .cardAnime__rank */
+  display: flex;
+  flex-direction: column; /* Icon/Number on top, text below */
+  align-items: center;
+}
+.anime-card-score div, .anime-card-rank div { /* Container for icon and number */
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.anime-card-score svg { stroke: var(--star-color); fill: var(--star-color); width:14px; height:14px;}
+.anime-card-rank svg { stroke: var(--text-primary); width:14px; height:14px;}
+
+.anime-card-score small, .anime-card-rank small {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+}
+
+
+.anime-card-genres { /* Replaces .cardAnime__genres */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto; /* Push to bottom if card body has extra space */
+}
+
 
 @media (max-width: 768px) {
   .quote-box {
@@ -444,7 +532,7 @@ button:hover {
   }
   .anime-info, .quote-text {
     width: 100%;
-    max-width: 450px; /* Keep this consistent for tablet */
+    max-width: 450px;
     padding: 20px;
   }
   #anime-api-content img {
@@ -457,11 +545,12 @@ button:hover {
   .anime-list-section h2 { font-size: 1.15rem; margin-bottom: 12px; }
 
   .anime-grid { gap: 12px; }
-  .anime-card { width: 125px; }
-  .anime-card img { height: 175px; }
-  .anime-card-info { padding: 8px; }
-  .anime-card h3 { font-size: 0.75rem; height: 2.4em; margin: 0 0 3px 0;}
-  .anime-card p { font-size: 0.7rem; }
+  .anime-card { width: 170px; } /* Adjusted card size for tablet */
+  .anime-card-cover { height: 230px; }
+  .anime-card-title { font-size: 0.9rem; }
+  .chip { font-size: 0.65rem; padding: 2px 6px;}
+  .anime-card-meta { font-size: 0.7rem; }
+  .anime-card-rating { font-size: 0.75rem; }
 }
 
 @media (max-width: 480px) {
@@ -480,9 +569,7 @@ button:hover {
   .anime-list-section h2 { font-size: 1.1rem; }
 
   .anime-grid { gap: 10px; }
-  .anime-card { width: 110px; }
-  .anime-card img { height: 155px; }
-  .anime-card-info { padding: 6px; }
-  .anime-card h3 { font-size: 0.7rem; line-height: 1.2em; height: 2.4em; margin: 0 0 2px 0;}
-  .anime-card p { font-size: 0.65rem; }
+  .anime-card { width: 150px; } /* Adjusted card size for mobile */
+  .anime-card-cover { height: 210px; }
+  .anime-card-title { font-size: 0.85rem; }
 }
