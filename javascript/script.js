@@ -47,7 +47,7 @@ async function getQuote() {
   await new Promise(resolve => setTimeout(resolve, 300));
 
   let item;
-  let currentAnimeForQuote = null; // Store anime info for the quote section
+  let currentAnimeForQuote = null;
 
   try {
     const response = await fetch('https://yurippe.vercel.app/api/quotes?random=1');
@@ -89,7 +89,7 @@ async function getQuote() {
     if (!jikanResponse.ok) throw new Error(`Jikan API error: ${jikanResponse.status}`);
     const jikanData = await jikanResponse.json();
     if (jikanData.data && jikanData.data.length > 0) {
-      currentAnimeForQuote = jikanData.data[0]; // Store for linking title
+      currentAnimeForQuote = jikanData.data[0];
     }
   } catch (error) {
     console.error("Jikan API error for quote section:", error);
@@ -108,7 +108,6 @@ async function getQuote() {
       animeImage.alt = (currentAnimeForQuote.title_english || currentAnimeForQuote.title || showNameFromQuoteApi) + " poster";
     }
     if (animeTitleElem) {
-      // Make the anime title in the quote section a link to its detail page
       animeTitleElem.innerHTML = `<a href="#/anime/${currentAnimeForQuote.mal_id}">${currentAnimeForQuote.title_english || currentAnimeForQuote.title}</a>`;
     }
     const aired = currentAnimeForQuote.aired?.string || "Unknown";
@@ -210,7 +209,7 @@ function createAnimeCard(anime) {
   }
   bodyDiv.appendChild(metaDiv);
 
-  const titleH4 = document.createElement('h4'); // Changed from p to h4
+  const titleH4 = document.createElement('h4');
   titleH4.className = 'anime-card-title';
   titleH4.textContent = anime.title_english || anime.title || 'Untitled Anime';
   bodyDiv.appendChild(titleH4);
@@ -229,7 +228,7 @@ function createAnimeCard(anime) {
     scoreSvg.innerHTML = '<path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>';
     scoreValDiv.appendChild(scoreSvg);
   }
-  scoreValDiv.append(` ${anime.score ? anime.score.toFixed(1) : 'N/A'}`); // Example shows 1 decimal
+  scoreValDiv.append(` ${anime.score ? anime.score.toFixed(1) : 'N/A'}`);
   scoreDiv.appendChild(scoreValDiv);
   const usersSmall = document.createElement('small');
   usersSmall.textContent = `${anime.members ? (anime.members / 1000).toFixed(0) + 'k users' : ''}`;
@@ -423,25 +422,22 @@ async function displayAnimeDetailPage(animeId) {
         let themesHTML = (anime.themes || []).map(t => `<span class="detail-tag">${t.name}</span>`).join('');
         let demographicsHTML = (anime.demographics || []).map(d => `<span class="detail-tag">${d.name}</span>`).join('');
         
-        let trailerHTML = '';
-        if (anime.trailer?.embed_url) {
-            const embedUrl = anime.trailer.embed_url.includes('?') ? 
-                             anime.trailer.embed_url.replace('autoplay=1', 'autoplay=0') + '&enablejsapi=1' : 
-                             anime.trailer.embed_url + '?autoplay=0&enablejsapi=1';
-            trailerHTML = `
+        let trailerDisplayHTML = '';
+        if (anime.trailer?.youtube_id && anime.trailer?.images?.medium_image_url) {
+            trailerDisplayHTML = `
                 <div class="detail-trailer-container">
                     <h3>Trailer</h3>
-                    <div class="video-responsive">
-                        <iframe 
-                            src="${embedUrl}" 
-                            title="Anime Trailer" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
+                    <a href="${anime.trailer.url}" target="_blank" rel="noopener noreferrer" class="detail-trailer-thumbnail-container">
+                        <img src="${anime.trailer.images.maximum_image_url || anime.trailer.images.medium_image_url}" alt="${anime.title} Trailer Thumbnail">
+                        <div class="detail-trailer-play-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                        </div>
+                    </a>
                 </div>`;
         }
+
 
         const malLinkHTML = anime.url ? `
             <div class="mal-link-container">
@@ -453,7 +449,7 @@ async function displayAnimeDetailPage(animeId) {
             <div class="detail-container">
                 <div class="detail-poster-area">
                     <img src="${anime.images?.jpg?.large_image_url || 'assest/placeholder-poster.png'}" alt="${anime.title || 'Anime Poster'}">
-                    ${trailerHTML} 
+                    ${trailerDisplayHTML} 
                 </div>
                 <div class="detail-info-area">
                     <div class="detail-header">
@@ -489,7 +485,6 @@ async function displayAnimeDetailPage(animeId) {
                     ${themesHTML ? `<div class="detail-tags-container"><h3>Themes</h3><div class="detail-tags">${themesHTML}</div></div>` : ''}
                     ${demographicsHTML ? `<div class="detail-tags-container"><h3>Demographics</h3><div class="detail-tags">${demographicsHTML}</div></div>` : ''}
                     
-                    <!-- Back to Main button removed as per request -->
                 </div>
             </div>
         `;
@@ -507,7 +502,7 @@ function showMainView() {
     const jikanPlaceholderContent = document.getElementById('jikan-placeholder-content');
     const animeApiContent = document.getElementById('anime-api-content');
     if(jikanPlaceholderContent && animeApiContent && animeApiContent.style.display !== 'none') {
-        jikanPlaceholderContent.style.display = 'flex'; // Show placeholder on main view
+        jikanPlaceholderContent.style.display = 'flex';
         animeApiContent.style.display = 'none';
     }
 }
